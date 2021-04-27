@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.smart.cms</groupId>
+    <artifactId>SmartCms</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>smart-cms-base-common</module>
+        <module>smart-cms-base-gateway</module>
+        <module>smart-cms-base-oauth</module>
+    </modules>
+    <packaging>pom</packaging>
+    <developers>
+        <developer>
+            <name>Lucas</name>
+            <email>1175215747@qq.com</email>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <springfox.boot.starter.version>3.0.0</springfox.boot.starter.version>
+        <quartz.version>2.2.1</quartz.version>
+        <qrgen.version>2.0</qrgen.version>
+        <commons-lang3.version>3.4</commons-lang3.version>
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <fastjson.version>1.2.44</fastjson.version>
+        <hutool.version>5.5.2</hutool.version>
+        <lcn.last.version>4.1.0</lcn.last.version>
+        <spring.boot.redis.version>2.2.7.RELEASE</spring.boot.redis.version>
+        <redisson.version>3.11.0</redisson.version>
+        <guava.version>27.1-jre</guava.version>
+        <netty.all.version>4.1.42.Final</netty.all.version>
+        <jjwt.version>0.7.0</jjwt.version>
+        <commons-io.version>1.3.2</commons-io.version>
+        <lombok.version>1.16.14</lombok.version>
+        <swagger-bootstrap.version>1.9.5</swagger-bootstrap.version>
+        <apache.poi.version>4.1.1</apache.poi.version>
+        <nimbus-jose-jwt.version>8.16</nimbus-jose-jwt.version>
+        <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+        <spring-cloud-alibaba.version>2.2.1.RELEASE</spring-cloud-alibaba.version>
+    </properties>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.4.RELEASE</version>
+    </parent>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>

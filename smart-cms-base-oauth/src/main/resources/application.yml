@@ -1,0 +1,43 @@
+swagger: #接口注解文档
+  basepackage: com.smart.cms.api #必须要有 GetMapping，PostMapping...
+  service:
+    name: ${spring.application.name} #api名称
+    version: 1.0
+    contact:
+      developer: Lacus #api开发者
+      email: 1175215747@qq.com #api开发者
+server:
+  port: 8999
+
+spring:
+  application:
+      name: smart-cms-auth
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848/ # 配置nacos注册中心
+  jpa: #JPA配置
+    generate-ddl: false
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+auth:
+  token:
+    alias: jwt
+    jwtFileName: jwt.jks
+    jwtPassword: yuntuo18419
+  white-list:
+    - "/rsa/publicKey" # 获取公钥
+# 日志
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
