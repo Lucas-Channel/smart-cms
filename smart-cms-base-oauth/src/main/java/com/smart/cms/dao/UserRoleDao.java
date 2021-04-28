@@ -15,5 +15,5 @@ public interface UserRoleDao extends JpaRepository<UserRolePo, Long> {
      * @author LiuYongTao
      * @date 2018/11/5 16:23
      */
-    List<UserRolePo> findRoleIdByUserIdAndValidIndIsTrue(Long userId);
+    List<UserRolePo> findRoleIdByUserIdAndDelFlag(Long userId, int delFlag);
 }

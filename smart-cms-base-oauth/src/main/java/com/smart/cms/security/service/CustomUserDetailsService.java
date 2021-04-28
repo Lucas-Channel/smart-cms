@@ -47,7 +47,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         // 查询用户信息
-//        UserPo userPo = userDao.findUserInfoByUsercodeAndValidIndIsTrue(usercode);
+//        UserPo userPo = userDao.findUserInfoByUsercodeAndDelflagIsZero(usercode);
         UserPo userPo = userDao.findUserInfoByUsercode(usercode);
         if (userPo == null) {
             logger.error("用户：{}，不存在！", usercode);
@@ -62,7 +62,7 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("用户：" + usercode + "，被删除");
         }
         // 查询角色信息
-        List<UserRolePo> userRolePos = userRoleDao.findRoleIdByUserIdAndValidIndIsTrue(userPo.getId());
+        List<UserRolePo> userRolePos = userRoleDao.findRoleIdByUserIdAndDelFlag(userPo.getId(), 0);
         if (CollectionUtils.isEmpty(userRolePos)) {
             logger.error("用户：{}，未分配角色！", usercode);
             throw new UsernameNotFoundException("用户：" + usercode + "，未分配角色");
