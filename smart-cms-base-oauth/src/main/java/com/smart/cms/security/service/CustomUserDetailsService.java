@@ -47,8 +47,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         // 查询用户信息
-//        UserPo userPo = userDao.findUserInfoByUsercodeAndDelflagIsZero(usercode);
-        UserPo userPo = userDao.findUserInfoByUsercode(usercode);
+        UserPo userPo = userDao.findUserInfoByUsercodeAndDelFlag(usercode, 0);
         if (userPo == null) {
             logger.error("用户：{}，不存在！", usercode);
             throw new UsernameNotFoundException("用户：" + usercode + "，不存在");
