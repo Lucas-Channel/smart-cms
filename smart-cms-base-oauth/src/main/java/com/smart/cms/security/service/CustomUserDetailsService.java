@@ -53,9 +53,13 @@ public class CustomUserDetailsService implements UserDetailsService {
             logger.error("用户：{}，不存在！", usercode);
             throw new UsernameNotFoundException("用户：" + usercode + "，不存在");
         }
-        if (!userPo.getValidInd()) {
+        if (userPo.getDelFlag() == 2 ) {
             logger.error("用户：{}，被锁定！", usercode);
             throw new UsernameNotFoundException("用户：" + usercode + "，被锁定");
+        }
+        if (userPo.getDelFlag() == 1 ) {
+            logger.error("用户：{}，被删除！", usercode);
+            throw new UsernameNotFoundException("用户：" + usercode + "，被删除");
         }
         // 查询角色信息
         List<UserRolePo> userRolePos = userRoleDao.findRoleIdByUserIdAndValidIndIsTrue(userPo.getId());

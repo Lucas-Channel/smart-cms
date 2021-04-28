@@ -36,7 +36,7 @@ CREATE TABLE `sys_user`  (
   `create_time` datetime(0) DEFAULT NULL,
   `updater_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `update_time` datetime(0) DEFAULT NULL,
-  `valid_ind` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `del_flag` int DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 

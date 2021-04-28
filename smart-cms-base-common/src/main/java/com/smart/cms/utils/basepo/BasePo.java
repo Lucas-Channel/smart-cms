@@ -39,5 +39,5 @@ public class BasePo {
     private Date updateTime;
     // 有效标志
     @Column
-    private Boolean validInd;
+    private int delFlag;
 }

@@ -30,14 +30,14 @@ CREATE TABLE `sys_role`  (
   `creator_code` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `updater_code` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `update_time` datetime(0) DEFAULT NULL,
-  `valid_ind` char(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `del_flag` int DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role
 -- ----------------------------
-INSERT INTO `sys_role` VALUES (1001, 'admin', 'admin', '超管拥有全部权限', '2021-04-26 09:15:41', '1', NULL, '2021-04-27 17:50:27', 'Y');
-INSERT INTO `sys_role` VALUES (1002, '普通用户', 'user', '普通用户', '2021-04-26 09:16:24', '1', NULL, '2021-04-27 17:50:31', 'Y');
+INSERT INTO `sys_role` VALUES (1001, 'admin', 'admin', '超管拥有全部权限', '2021-04-26 09:15:41', '1', NULL, '2021-04-27 17:50:27', '0');
+INSERT INTO `sys_role` VALUES (1002, '普通用户', 'user', '普通用户', '2021-04-26 09:16:24', '1', NULL, '2021-04-27 17:50:31', '0');
 
 SET FOREIGN_KEY_CHECKS = 1;
