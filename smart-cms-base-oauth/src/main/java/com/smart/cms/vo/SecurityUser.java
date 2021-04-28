@@ -43,7 +43,7 @@ public class SecurityUser implements UserDetails {
         this.setUsername(userPo.getUsername());
         this.setUsercode(userPo.getUsercode());
         this.setPassword(userPo.getPassword());
-        this.setEnabled(userPo.getValidInd());
+        this.setEnabled(userPo.getDelFlag() == 0);
         this.setAuthorities(authorities);
     }
 
