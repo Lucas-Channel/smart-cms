@@ -1,11 +1,3 @@
-swagger: #接口注解文档
-  enable: true # 是否开启swagger
-  service:
-    name: ${spring.application.name} #api名称
-    version: 1.0
-    contact:
-      developer: Lucas #api开发者
-      email: 1175215747@qq.com #api开发者
 server:
   port: 8771
 
@@ -17,6 +9,8 @@ ribbon:
 spring:
   application:
     name: smart-cms-gateway
+  profiles:
+    active: dev
   cloud:
     nacos:
       discovery:

@@ -7,7 +7,7 @@
 * spring security
 * spring oauth2
 * spring gateway
-* swagger
+* swagger 对于开发测试环境可以开发，但是生产环境不能开发
 * springMVC
 * mybatisPlus
 * MySQL

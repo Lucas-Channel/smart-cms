@@ -7,7 +7,7 @@ spring:
 
 swagger: #接口注解文档
   enable: true
-  basepackage: com.smart.cms.api #必须要有 GetMapping，PostMapping...
+  basepackage: com.smart.cms.**.controller
   service:
     name: ${spring.application.name} #api名称
     version: 1.0

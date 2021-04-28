@@ -1,6 +1,6 @@
 package com.smart.cms.po;
 
-import com.smart.cms.utils.basepo.BasePo;
+import com.smart.cms.base.BaseEntityJpa;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -12,7 +12,7 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "sys_user")
-public class UserPo extends BasePo implements Serializable {
+public class UserPo extends BaseEntityJpa implements Serializable {
     private static final long serialVersionUID = 2220088284225413963L;
     @Column
     private String username;

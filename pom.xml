@@ -11,6 +11,8 @@
         <module>smart-cms-base-common</module>
         <module>smart-cms-base-gateway</module>
         <module>smart-cms-base-oauth</module>
+        <module>smart-cms-base-system</module>
+        <module>smart-cms-base-entity</module>
     </modules>
     <packaging>pom</packaging>
     <developers>

@@ -1,7 +1,7 @@
 package com.smart.cms.po;
 
 
-import com.smart.cms.utils.basepo.BasePo;
+import com.smart.cms.base.BaseEntityJpa;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -15,7 +15,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "sys_user_role")
-public class UserRolePo extends BasePo implements Serializable {
+public class UserRolePo extends BaseEntityJpa implements Serializable {
     private static final long serialVersionUID = 2220088284225413966L;
     // 用户id
     @Column

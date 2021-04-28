@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SmartCms</artifactId>
+        <groupId>com.smart.cms</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>smart-cms-base-system</artifactId>
+    <packaging>jar</packaging>
+    <description>系统管理模块 提供角色、菜单、权限、数据字典等接口服务</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.smart.cms</groupId>
+            <artifactId>smart-cms-base-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
+</project>

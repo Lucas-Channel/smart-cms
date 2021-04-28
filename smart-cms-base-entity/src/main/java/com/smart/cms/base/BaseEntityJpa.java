@@ -1,4 +1,4 @@
-package com.smart.cms.utils.basepo;
+package com.smart.cms.base;
 
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -17,7 +17,7 @@ import java.util.Date;
  * @Version: 1.0
  */
 @Data
-public class BasePo {
+public class BaseEntityJpa {
     // 主键id
     @Id
     @Column
