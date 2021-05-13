@@ -1,10 +1,11 @@
 package com.smart.cms.security.service;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.smart.cms.dao.RoleDao;
 import com.smart.cms.dao.UserDao;
 import com.smart.cms.dao.UserRoleDao;
-import com.smart.cms.po.RolePo;
-import com.smart.cms.po.UserPo;
-import com.smart.cms.po.UserRolePo;
+import com.smart.cms.user.RoleBase;
+import com.smart.cms.user.UserBase;
+import com.smart.cms.user.UserRole;
 import com.smart.cms.utils.other.ToolsUtils;
 import com.smart.cms.vo.SecurityUser;
 import org.slf4j.Logger;
@@ -17,10 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.CollectionUtils;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 /**
  * 查询登陆用户信息
@@ -47,11 +45,14 @@ public class CustomUserDetailsService implements UserDetailsService {
         }
 
         // 查询用户信息
-        UserPo userPo = userDao.findUserInfoByUsercodeAndDelFlag(usercode, 0);
-        if (userPo == null) {
+        Map<String, Object> columnMap = new HashMap<>();
+        columnMap.put("usercode", usercode);
+        List<UserBase> userPos = userDao.selectByMap(columnMap);
+        if (CollectionUtils.isEmpty(userPos)) {
             logger.error("用户：{}，不存在！", usercode);
             throw new UsernameNotFoundException("用户：" + usercode + "，不存在");
         }
+        UserBase userPo = userPos.get(0);
         if (userPo.getDelFlag() == 2 ) {
             logger.error("用户：{}，被锁定！", usercode);
             throw new UsernameNotFoundException("用户：" + usercode + "，被锁定");
@@ -61,19 +62,19 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("用户：" + usercode + "，被删除");
         }
         // 查询角色信息
-        List<UserRolePo> userRolePos = userRoleDao.findRoleIdByUserIdAndDelFlag(userPo.getId(), 0);
+        List<UserRole> userRolePos = userRoleDao.selectList(new QueryWrapper<UserRole>().lambda().eq(UserRole::getUserId, userPo.getId()).eq(UserRole::getDelFlag, 0));
         if (CollectionUtils.isEmpty(userRolePos)) {
             logger.error("用户：{}，未分配角色！", usercode);
             throw new UsernameNotFoundException("用户：" + usercode + "，未分配角色");
         }
         userRolePos.stream().forEach(ur -> {
             Long roleId = ur.getRoleId();
-            Optional<RolePo> rolePo = roleDao.findById(roleId);
-            if (!rolePo.isPresent()) {
+            RoleBase rolePo = roleDao.selectById(roleId);
+            if (rolePo == null) {
                 logger.error("用户：{}，roleId:{},未查询到信息！", usercode, roleId);
                 return;
             }
-            authorities.add(new SimpleGrantedAuthority(rolePo.get().getRoleCode()));
+            authorities.add(new SimpleGrantedAuthority(rolePo.getRoleCode()));
         });
         if (CollectionUtils.isEmpty(authorities)) {
             logger.error("用户：{}，未分配权限！", usercode);

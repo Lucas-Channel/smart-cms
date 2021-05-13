@@ -1,9 +1,9 @@
 package com.smart.cms.dao;
 
-import com.smart.cms.po.UserPo;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.smart.cms.user.UserBase;
 
-public interface UserDao extends JpaRepository<UserPo, Long> {
+public interface UserDao extends BaseMapper<UserBase> {
 
     /**
      * 通过用户code 查询用户信息
@@ -14,5 +14,5 @@ public interface UserDao extends JpaRepository<UserPo, Long> {
      * @date 2018/11/5 16:09
      */
 
-    UserPo findUserInfoByUsercodeAndDelFlag(String userCode, int delFlag);
+    UserBase findUserInfoByUsercodeAndDelFlag(String userCode, int delFlag);
 }

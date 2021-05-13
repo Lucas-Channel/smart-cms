@@ -1,6 +1,6 @@
 package com.smart.cms.vo;
 
-import com.smart.cms.po.UserPo;
+import com.smart.cms.user.UserBase;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,7 +38,7 @@ public class SecurityUser implements UserDetails {
      */
     private Collection<? extends GrantedAuthority> authorities;
 
-    public SecurityUser(UserPo userPo, Collection<? extends GrantedAuthority> authorities) {
+    public SecurityUser(UserBase userPo, Collection<? extends GrantedAuthority> authorities) {
         this.setId(userPo.getId());
         this.setUsername(userPo.getUsername());
         this.setUsercode(userPo.getUsercode());

@@ -1,11 +1,11 @@
 package com.smart.cms.dao;
 
-import com.smart.cms.po.UserRolePo;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.smart.cms.user.UserRole;
 
 import java.util.List;
 
-public interface UserRoleDao extends JpaRepository<UserRolePo, Long> {
+public interface UserRoleDao extends BaseMapper<UserRole> {
 
     /**
      * 通过用户id 查询出角色id
@@ -15,5 +15,5 @@ public interface UserRoleDao extends JpaRepository<UserRolePo, Long> {
      * @author LiuYongTao
      * @date 2018/11/5 16:23
      */
-    List<UserRolePo> findRoleIdByUserIdAndDelFlag(Long userId, int delFlag);
+    List<UserRole> findRoleIdByUserIdAndDelFlag(Long userId, int delFlag);
 }

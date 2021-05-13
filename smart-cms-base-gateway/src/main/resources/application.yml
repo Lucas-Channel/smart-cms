@@ -21,50 +21,23 @@ spring:
         locator:
           enabled: true
           lower-case-service-id: true
-#      routes:
-#        - id: public-auth
-#          # lb代表从注册中心获取服务，且已负载均衡方式转发
-#          uri: lb://learn-shop-public-auth
-#          predicates:
-#            - Path=/public-auth/**
-#          # 加上StripPrefix=1，否则转发到后端服务时会带上consumer前缀
-#          filters:
-#            - StripPrefix=1
-#        - id: admin-system
-#          # lb代表从注册中心获取服务，且已负载均衡方式转发
-#          uri: lb://learn-shop-admin-system
-#          predicates:
-#            - Path=/admin-system/**
-#        - id: admin-user
-#          # lb代表从注册中心获取服务，且已负载均衡方式转发
-#          uri: lb://learn-shop-admin-user
-#          predicates:
-#            - Path=/admin-user/**
-#        - id: core-order
-#          # lb代表从注册中心获取服务，且已负载均衡方式转发
-#          uri: lb://learn-shop-core-order
-#          predicates:
-#            - Path=/core-order/**
-#        - id: core-product
-#          # lb代表从注册中心获取服务，且已负载均衡方式转发
-#          uri: lb://learn-shop-core-product
-#          predicates:
-#            - Path=/core-product/**
-#        - id: core-search
-#          # lb代表从注册中心获取服务，且已负载均衡方式转发
-#          uri: lb://learn-shop-core-search
-#          predicates:
-#            - Path=/core-search/**
-#        - id: core-seckill
-#          # lb代表从注册中心获取服务，且已负载均衡方式转发
-#          uri: lb://learn-shop-core-seckill
-#          predicates:
-#            - Path=/core-seckill/**
-#        - id: public-job
-#          # lb代表从注册中心获取服务，且已负载均衡方式转发
-#          uri: lb://learn-shop-public-job
-#          predicates:
-#            - Path=/public-job/**
+      routes:
+        - id: smart-auth
+          # lb代表从注册中心获取服务，且已负载均衡方式转发
+          uri: lb://smart-cms-auth
+          predicates:
+            - Path=/smart-auth/**
+          # 加上StripPrefix=1，否则转发到后端服务时会带上consumer前缀
+          filters:
+            - StripPrefix=1
+        - id: smart-system
+          # lb代表从注册中心获取服务，且已负载均衡方式转发
+          uri: lb://smart-cms-system
+          predicates:
+            - Path=/smart-system/**
+          # 加上StripPrefix=1，否则转发到后端服务时会带上consumer前缀
+          filters:
+            - StripPrefix=1
   security:
     oauth2:
       resourceserver:

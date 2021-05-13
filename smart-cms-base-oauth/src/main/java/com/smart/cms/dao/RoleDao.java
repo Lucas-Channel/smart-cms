@@ -1,7 +1,7 @@
 package com.smart.cms.dao;
 
-import com.smart.cms.po.RolePo;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.smart.cms.user.RoleBase;
 
-public interface RoleDao extends JpaRepository<RolePo, Long> {
+public interface RoleDao extends BaseMapper<RoleBase> {
 }
