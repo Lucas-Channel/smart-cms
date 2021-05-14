@@ -36,6 +36,6 @@ CREATE TABLE `sys_user_role`  (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
-INSERT INTO `sys_user_role` VALUES (1, 1, 1001, '2021-04-26 09:50:37', NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user_role` VALUES (1, 1, 1001, '2021-04-26 09:50:37', NULL, NULL, NULL, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

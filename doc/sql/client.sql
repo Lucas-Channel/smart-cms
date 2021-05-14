@@ -23,6 +23,6 @@ CREATE TABLE `oauth_client_details`  (
 -- ----------------------------
 -- Records of oauth_client_details
 -- ----------------------------
-INSERT INTO `oauth_client_details` VALUES ('app', NULL, '自己搞一个', 'app', 'authorization_code,password,refresh_token,client_credentials', '', NULL, NULL, NULL, NULL, 'true');
-INSERT INTO `oauth_client_details` VALUES ('swagger', NULL, '自己搞一个', 'webapp', 'authorization_code,password,refresh_token,client_credentials', '', NULL, NULL, NULL, NULL, 'true');
-INSERT INTO `oauth_client_details` VALUES ('webapp', NULL, '自己搞一个', 'webapp', 'authorization_code,password,refresh_token,client_credentials', '', NULL, NULL, NULL, NULL, 'true');
+INSERT INTO `oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `additional_information`, `autoapprove`) VALUES ('app', NULL, 'app_secret', 'all', 'authorization_code,password,refresh_token,client_credentials', '', NULL, 86400, 604800, NULL, 'true');
+INSERT INTO `oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `additional_information`, `autoapprove`) VALUES ('smart_cms', NULL, '$2a$10$C3xUwmMnUn88ud5eNBixhuvkr0XrHkr/6IuyvLnpUMpDB/39zlfsy', 'all', 'authorization_code,password,refresh_token,client_credentials', '', NULL, 86400, 604800, NULL, 'true');
+INSERT INTO `oauth_client_details` (`client_id`, `resource_ids`, `client_secret`, `scope`, `authorized_grant_types`, `web_server_redirect_uri`, `authorities`, `access_token_validity`, `refresh_token_validity`, `additional_information`, `autoapprove`) VALUES ('swagger', NULL, 'swagger_secret', 'all', 'authorization_code,password,refresh_token,client_credentials', '', NULL, 86400, 604800, NULL, 'true');
