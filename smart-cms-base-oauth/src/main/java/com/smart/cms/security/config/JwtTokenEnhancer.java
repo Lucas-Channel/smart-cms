@@ -15,6 +15,12 @@ import java.util.Map;
  */
 @Component
 public class JwtTokenEnhancer implements TokenEnhancer {
+    /**
+     *  自定义返回的数据
+     * @param accessToken
+     * @param authentication
+     * @return
+     */
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();

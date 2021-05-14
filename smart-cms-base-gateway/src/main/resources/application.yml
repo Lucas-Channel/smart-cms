@@ -46,17 +46,11 @@ spring:
 
 # 自己定义安全配置
 secure:
-  client: # 登陆客户端配置
-    client-id: yuntuo
-    client-secret: yuntuo_secert
-    scope: all
-    grant-type: password,authorization_code, refresh_token
-    access-token-uri: "http://learn-shop-public-auth/oauth/token"
   white-list:
     - "/actuator/**"              # 健康检查
     - "/userApi/*"                # 获取用户信息
-    - "/public-auth/oauth/token"  # 获取token或者刷新token
-    - "/public-auth/rsa/publicKey"  # 获取公钥
+    - "/smart-auth/oauth/token"  # 获取token或者刷新token
+    - "/smart-auth/rsa/publicKey"  # 获取公钥
     # swagger 配置
     - /v3/**
     - /**/v3/**
@@ -67,5 +61,4 @@ secure:
     - /favicon.ico
     - /**/*App/**
   need-check:
-    - "/**/*Api/**"
-    - "/*Api/**"
+    - "/**/**/*Api"

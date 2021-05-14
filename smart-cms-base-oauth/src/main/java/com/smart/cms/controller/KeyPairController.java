@@ -1,4 +1,4 @@
-package com.smart.cms.api;
+package com.smart.cms.controller;
 
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;

@@ -1,5 +1,6 @@
 package com.smart.cms.user;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.smart.cms.base.BaseEntityData;
 import lombok.Data;
 
@@ -9,7 +10,7 @@ import javax.persistence.Table;
 import java.io.Serializable;
 
 @Data
-@Table(name = "sys_role")
+@TableName("sys_role")
 public class RoleBase extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = 2220088284222413966L;
     /**
@@ -26,5 +27,5 @@ public class RoleBase extends BaseEntityData implements Serializable {
      * 角色描述
      */
     @Column
-    private String descritpion;
+    private String description;
 }

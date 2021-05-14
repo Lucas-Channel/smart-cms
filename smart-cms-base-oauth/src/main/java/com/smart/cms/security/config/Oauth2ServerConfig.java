@@ -43,13 +43,25 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtTokenEnhancer jwtTokenEnhancer;
-
+    /**
+     * 配置客户端详情（可以把客户端信息写死在此或者通过数据库来存储调取详情信息）
+     *
+     * @param clients
+     * @throws Exception
+     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         // 客户端访问方式配置数据在数据库中
         clients.withClientDetails(customClientDetailsService());
     }
 
+
+    /**
+     * 配置令牌端点的安全约束
+     *
+     * @param endpoints
+     * @throws Exception
+     */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
@@ -63,6 +75,12 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
                 .tokenEnhancer(enhancerChain);
     }
 
+    /**
+     * 用来配置授权一级令牌访问端点和令牌服务
+     *
+     * @param security
+     * @throws Exception
+     */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.allowFormAuthenticationForClients()
@@ -70,6 +88,11 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
                 .checkTokenAccess("permitAll()");// 校验token
     }
 
+    /**
+     * 使用非对称加密算法对token签名
+     *
+     * @return
+     */
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
