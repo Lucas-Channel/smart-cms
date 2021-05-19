@@ -49,7 +49,7 @@ secure:
   white-list:
     - "/actuator/**"              # 健康检查
     - "/userApi/*"                # 获取用户信息
-    - "/smart-auth/oauth/token"  # 获取token或者刷新token
+    - "/smart-auth/oauth/**"  # 获取token或者刷新token
     - "/smart-auth/rsa/publicKey"  # 获取公钥
     # swagger 配置
     - /v3/**

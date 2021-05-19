@@ -1,5 +1,9 @@
 package com.smart.cms.filter;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.AllArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -7,13 +11,18 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.route.Route;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.core.Ordered;
+import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Set;
 
@@ -24,7 +33,10 @@ import java.util.Set;
  * @create 20210427
  */
 @Component
+@AllArgsConstructor
 public class RequestInfoFilter implements GlobalFilter, Ordered {
+
+    private final ObjectMapper objectMapper;
 
     private static Logger log = LoggerFactory.getLogger(RequestInfoFilter.class);
 
@@ -74,6 +86,19 @@ public class RequestInfoFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        // 校验token全局返回信息
+//        ServerHttpResponse resp = exchange.getResponse();
+//        String headerToken = exchange.getRequest().getHeaders().getFirst("headerToken");
+//        String paramToken = exchange.getRequest().getQueryParams().getFirst("param-token");
+//        if (StringUtils.isBlank(headerToken) && StringUtils.isBlank(paramToken)) {
+//            return unAuth(resp, "缺失令牌,鉴权失败");
+//        }
+//        String auth = StringUtils.isBlank(headerToken) ? paramToken : headerToken;
+//        String token = JwtUtil.getToken(auth);
+//        Claims claims = JwtUtil.parseJWT(token);
+//        if (claims == null) {
+//            return unAuth(resp, "请求未授权");
+//        }
         return chain.filter(exchange).then(
                 Mono.fromRunnable(() -> {
                     ServerHttpRequest request = exchange.getRequest();
@@ -88,6 +113,19 @@ public class RequestInfoFilter implements GlobalFilter, Ordered {
                     log.info("\r 路由到 --> {}", routeUri);
                 })
         );
+    }
+
+    private Mono<Void> unAuth(ServerHttpResponse resp, String msg) {
+        resp.setStatusCode(HttpStatus.UNAUTHORIZED);
+        resp.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
+        String result = "";
+        try {
+            result = objectMapper.writeValueAsString(msg);
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage(), e);
+        }
+        DataBuffer buffer = resp.bufferFactory().wrap(result.getBytes(StandardCharsets.UTF_8));
+        return resp.writeWith(Flux.just(buffer));
     }
 
     @Override
