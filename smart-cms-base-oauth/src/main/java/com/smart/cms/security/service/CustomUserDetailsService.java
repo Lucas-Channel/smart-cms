@@ -74,7 +74,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 logger.error("用户：{}，roleId:{},未查询到信息！", usercode, roleId);
                 return;
             }
-            authorities.add(new SimpleGrantedAuthority(rolePo.getRoleCode()));
+            authorities.add(new SimpleGrantedAuthority(rolePo.getRoleCode().toUpperCase()));
         });
         if (CollectionUtils.isEmpty(authorities)) {
             logger.error("用户：{}，未分配权限！", usercode);

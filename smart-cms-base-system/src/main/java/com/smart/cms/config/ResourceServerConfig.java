@@ -21,9 +21,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .csrf().disable()
                 .exceptionHandling()
                 .authenticationEntryPoint((request, response, authException) -> response.sendError(HttpServletResponse.SC_UNAUTHORIZED))
-
                 .and().requestMatchers().antMatchers("/**")
-
                 .and().authorizeRequests()
                 .antMatchers(HttpMethod.GET,
                         "/**/*.css",
@@ -37,7 +35,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/api.app/**"
                 ).permitAll()
                 .antMatchers(HttpMethod.OPTIONS,"/oauth/token").permitAll()
-                .antMatchers("/**").authenticated()
+                .anyRequest().authenticated()
                 .and()
                 .httpBasic();
     }

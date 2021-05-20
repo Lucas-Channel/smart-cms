@@ -12,6 +12,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -31,16 +32,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CustomUserDetailsService userDetailsService;
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests()
+        http.csrf().disable().authorizeRequests()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
-                .and().authorizeRequests().antMatchers("/rsa/publicKey").permitAll()
+                .and().authorizeRequests()
+                .antMatchers("/rsa/publicKey").permitAll()
                 .antMatchers(ArrayUtil.toArray(authProperties.getWhiteList(), String.class)).permitAll() // 对于白名单开发权限
+                .antMatchers("/v2/api-docs", "/swagger-resources/configuration/ui","/oauth/testApi",
+                        "/swagger-resources", "/swagger-resources/configuration/security",
+                        "/swagger-ui.html", "/webjars/**").permitAll()
                 .anyRequest().authenticated();
-        http.csrf().disable();
-
     }
 
     @Bean
