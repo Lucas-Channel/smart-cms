@@ -62,3 +62,4 @@
 * /oauth/authoriz?client_id=客户端id&response_type=token&scope=all&redirect_ui=www.baidu.com
 ### 密码模式
 * /oauth/token?client_id=客户端id&client_secret=密钥&grant_type=password&username=s&password=2312
+* /oauth/token?grant_type=refresh_token&refresh_token=refresh_token&scope=all

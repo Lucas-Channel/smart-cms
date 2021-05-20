@@ -26,7 +26,7 @@ spring:
           # lb代表从注册中心获取服务，且已负载均衡方式转发
           uri: lb://smart-cms-auth
           predicates:
-            - Path=/smart-auth/**
+            - Path=/smart-auth/**/**
           # 加上StripPrefix=1，否则转发到后端服务时会带上consumer前缀
           filters:
             - StripPrefix=1
@@ -34,7 +34,7 @@ spring:
           # lb代表从注册中心获取服务，且已负载均衡方式转发
           uri: lb://smart-cms-system
           predicates:
-            - Path=/smart-system/**
+            - Path=/smart-system/**/**
           # 加上StripPrefix=1，否则转发到后端服务时会带上consumer前缀
           filters:
             - StripPrefix=1

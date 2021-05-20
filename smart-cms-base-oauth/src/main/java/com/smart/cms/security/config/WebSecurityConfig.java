@@ -37,9 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
                 .and().authorizeRequests().antMatchers("/rsa/publicKey").permitAll()
-                .antMatchers(ArrayUtil.toArray(authProperties.getWhiteList(), String.class)).permitAll()
+                .antMatchers(ArrayUtil.toArray(authProperties.getWhiteList(), String.class)).permitAll() // 对于白名单开发权限
                 .anyRequest().authenticated();
-
+        http.csrf().disable();
 
     }
 
