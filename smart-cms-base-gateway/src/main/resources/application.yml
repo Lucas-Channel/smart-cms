@@ -47,18 +47,9 @@ spring:
 # 自己定义安全配置
 secure:
   white-list:
-    - "/actuator/**"              # 健康检查
+    - "/actuator/*"              # 健康检查
     - "/userApi/*"                # 获取用户信息
-    - "/smart-auth/oauth/**"  # 获取token或者刷新token
+    - "/smart-auth/oauth/*"  # 获取token或者刷新token
     - "/smart-auth/rsa/publicKey"  # 获取公钥
-    # swagger 配置
-    - /v3/**
-    - /**/v3/**
-    - /swagger-resources/**
-    - /swagger-resources
-    - /course/coursebase/**
-    - /swagger-ui/**
-    - /favicon.ico
-    - /**/*App/**
   need-check:
-    - "/**/**/*Api"
+    - "/**/*Api"
