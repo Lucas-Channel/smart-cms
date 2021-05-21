@@ -31,12 +31,12 @@ public class CodeGenerator {
     private static final Logger log = LoggerFactory.getLogger(CodeGenerator.class);
     private String systemName = "sword";
     private String codeName;
-    private String serviceName = "blade-service";
-    private String packageName = "org.springblade.test";
+    private String serviceName = "smart-service";
+    private String packageName = "com.smart.cms";
     private String packageDir;
     private String packageWebDir;
-    private String[] tablePrefix = new String[]{"blade_"};
-    private String[] includeTables = new String[]{"blade_test"};
+    private String[] tablePrefix = new String[]{"smart_"};
+    private String[] includeTables = new String[]{"smart_test"};
     private String[] excludeTables = new String[0];
     private Boolean hasSuperEntity;
     private Boolean hasWrapper;
@@ -92,16 +92,16 @@ public class CodeGenerator {
         }
 
         if (this.hasSuperEntity) {
-            strategy.setSuperEntityClass("org.springblade.core.mp.base.BaseEntity");
+            strategy.setSuperEntityClass("com.smart.cms.mp.base.BaseEntity");
             strategy.setSuperEntityColumns(this.superEntityColumns);
-            strategy.setSuperServiceClass("org.springblade.core.mp.base.BaseService");
-            strategy.setSuperServiceImplClass("org.springblade.core.mp.base.BaseServiceImpl");
+            strategy.setSuperServiceClass("com.smart.cms.mp.base.BaseService");
+            strategy.setSuperServiceImplClass("com.smart.cms.mp.base.BaseServiceImpl");
         } else {
             strategy.setSuperServiceClass("com.baomidou.mybatisplus.extension.service.IService");
             strategy.setSuperServiceImplClass("com.baomidou.mybatisplus.extension.service.impl.ServiceImpl");
         }
 
-        strategy.setSuperControllerClass("org.springblade.core.boot.ctrl.BladeController");
+        strategy.setSuperControllerClass("com.smart.cms.boot.ctrl.BladeController");
         strategy.setEntityBuilderModel(false);
         strategy.setEntityLombokModel(true);
         strategy.setControllerMappingHyphenStyle(true);
@@ -230,7 +230,7 @@ public class CodeGenerator {
     }
 
     public String getOutputDir() {
-        return (StringUtils.isBlank(this.packageDir) ? System.getProperty("user.dir") + "/blade-ops/blade-develop" : this.packageDir) + "/src/main/java";
+        return (StringUtils.isBlank(this.packageDir) ? System.getProperty("user.dir") + "/smart-cms-base-common" : this.packageDir) + "/src/main/java";
     }
 
     public String getOutputWebDir() {
@@ -251,7 +251,7 @@ public class CodeGenerator {
     public CodeGenerator() {
         this.hasSuperEntity = Boolean.FALSE;
         this.hasWrapper = Boolean.FALSE;
-        this.superEntityColumns = new String[]{"id", "create_time", "create_user", "create_dept", "update_time", "update_user", "status", "is_deleted"};
+        this.superEntityColumns = new String[]{"id", "create_time", "create_code", "update_time", "update_code", "del_flag"};
         this.tenantColumn = "tenant_id";
         this.isSwagger2 = Boolean.TRUE;
     }
