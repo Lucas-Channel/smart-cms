@@ -29,35 +29,27 @@ import java.util.Date;
 @ApiModel(value = "基础类", description = "基础类实体")
 public class BaseEntityData {
     // 主键id,使用雪花算法自动生成id
-    @Id
     @TableId(type = IdType.ASSIGN_ID)
-    @Column
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @JsonSerialize(using = ToStringSerializer.class)// 使用雪花算法生成的id精度超出17位，前端浏览器会把17位之后的数字用0自动替换，故转string返回给前端
     @ApiModelProperty(value = "主键id")
     private Long id;
     // 创建人
-    @Column
     @ApiModelProperty(value = "创建人")
     private String creatorCode;
     // 更新人
-    @Column
     @ApiModelProperty(value = "更新人")
     private String updaterCode;
     // 创建时间
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss.SSS")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @Column
     @ApiModelProperty(value = "创建时间")
     private Date createTime;
     // 更新时间
-    @Column
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss.SSS")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @ApiModelProperty(value = "更新时间")
     private Date updateTime;
     // 有效标志
-    @Column
     @ApiModelProperty(value = "有效标志")
     private int delFlag;
 }
