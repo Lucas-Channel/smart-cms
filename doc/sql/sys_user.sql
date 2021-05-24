@@ -43,6 +43,6 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'zhangsan', 'wocao', '$2a$10$kg0zVMoYtizHLnXnuHral.rThfK44BYTM0ncrEMIu.ac8lX0Yi.Zy', '111111', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO `sys_user` VALUES (1, 'zhangsan', 'zhangsan', '$2a$10$kg0zVMoYtizHLnXnuHral.rThfK44BYTM0ncrEMIu.ac8lX0Yi.Zy', '111111', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
