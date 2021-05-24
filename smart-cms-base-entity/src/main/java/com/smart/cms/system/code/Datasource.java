@@ -5,7 +5,6 @@ import com.smart.cms.base.BaseEntityData;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
 
@@ -17,7 +16,7 @@ import java.io.Serializable;
  * @Version: 1.0
  */
 @Data
-@TableName("blade_datasource")
+@TableName("smart_system_datasource")
 @ApiModel(value = "Datasource对象", description = "数据源配置表")
 public class Datasource extends BaseEntityData implements Serializable {
 

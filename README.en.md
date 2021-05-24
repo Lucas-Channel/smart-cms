@@ -12,7 +12,7 @@
 * mybatisPlus
 * MySQL
 * redis
-
+* spring-cloud-starter-alibaba-nacos
 ## 开发环境
 + jdk1.8及以上
 + maven 3.5及以上
