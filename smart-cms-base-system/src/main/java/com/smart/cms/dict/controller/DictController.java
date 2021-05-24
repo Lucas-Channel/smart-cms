@@ -1,13 +1,12 @@
-package com.smart.cms.menu.controller;
+package com.smart.cms.dict.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smart.cms.authconstant.RoleConstant;
-import com.smart.cms.menu.service.IMenuService;
-import com.smart.cms.menu.vo.MenuVo;
-import com.smart.cms.system.menu.MenuDTO;
+import com.smart.cms.dict.service.IDictService;
+import com.smart.cms.system.dict.DictDTO;
 import com.smart.cms.utils.other.PageData;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
@@ -31,9 +30,9 @@ import java.util.List;
 @RequestMapping("/menu")
 @Api(value = "菜单控制器", tags = "菜单控制器")
 @PreAuthorize(RoleConstant.HAS_ROLE_ADMIN)// 必须拥有超级管理员权限才可以访问这个类的接口
-public class MenuController {
+public class DictController {
 
-    private IMenuService menuService;
+    private IDictService dictService;
 
     /**
      * 分页
@@ -45,44 +44,28 @@ public class MenuController {
             @ApiImplicitParam(name = "current", value = "当前页", paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "size", value = "页码大小", paramType = "query", dataType = "int")
     })
-    @ApiOperation(value = "分页-菜单列表", notes = "传入menuVo")
-    public R<IPage<MenuDTO>> list(@RequestParam MenuVo menuVo, PageData pageData) {
-        QueryWrapper<MenuDTO> queryWrapper = new QueryWrapper<>();
+    @ApiOperation(value = "分页-菜单列表", notes = "传入dictDTO")
+    public R<IPage<DictDTO>> list(@RequestParam DictDTO dictDTO, PageData pageData) {
+        QueryWrapper<DictDTO> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("del_flag", 0);
-        queryWrapper.eq("parent_id", 0);// 获取一级目录列表
-        if (StringUtils.isNotBlank(menuVo.getMenuName())) {
-            queryWrapper.like("name", menuVo.getMenuName());
+        if (StringUtils.isNotBlank(dictDTO.getDictName())) {
+            queryWrapper.like("dict_name", dictDTO.getDictName());
         }
-        if (StringUtils.isNotBlank(menuVo.getMenuCode())) {
-            queryWrapper.like("code", menuVo.getMenuCode());
+        if (StringUtils.isNotBlank(dictDTO.getDictType())) {
+            queryWrapper.like("dict_type", dictDTO.getDictType());
         }
-        Page<MenuDTO> page = new Page<>(pageData.getCurrent(), pageData.getSize());
-        IPage<MenuDTO> pages = menuService.page(page, queryWrapper);
+        Page<DictDTO> page = new Page<>(pageData.getCurrent(), pageData.getSize());
+        IPage<DictDTO> pages = dictService.page(page, queryWrapper);
         return R.ok(pages);
     }
 
-    /**
-     * 获取母菜单下子菜单列表
-     */
-    @GetMapping("/menuList")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "parentId", value = "上级菜单id", paramType = "query", dataType = "Long")
-    })
-    @ApiOperation(value = "菜单列表", notes = "传入母菜单id")
-    public R<List<MenuDTO>> menuList(@RequestParam MenuVo menu) {
-        List<MenuDTO> list = menuService.lambdaQuery()
-                .eq(MenuDTO::getParentId, menu.getParentId())
-                .eq(MenuDTO::getDelFlag, 0)
-                .list();
-        return R.ok(list);
-    }
 
     @PostMapping("/saveOrUpdate")
     @ApiOperation(value = "新增或修改", notes = "传入menu")
-    public R saveOrUpdate(MenuDTO menuDTO) {
-        menuDTO.setCreateTime(new Date());
-        menuDTO.setDelFlag(0);
-       boolean row = menuService.saveOrUpdate(menuDTO);
+    public R saveOrUpdate(DictDTO dictDTO) {
+        dictDTO.setCreateTime(new Date());
+        dictDTO.setDelFlag(0);
+       boolean row = dictService.saveOrUpdate(dictDTO);
        return row ? R.ok("操作成功") : R.failed("操作成功");
     }
 
@@ -92,7 +75,7 @@ public class MenuController {
     @PostMapping("/remove")
     @ApiOperation(value = "删除", notes = "传入ids")
     public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam List<Long> ids) {
-        return R.ok(menuService.removeByIds(ids));
+        return R.ok(dictService.removeByIds(ids));
     }
 
 }

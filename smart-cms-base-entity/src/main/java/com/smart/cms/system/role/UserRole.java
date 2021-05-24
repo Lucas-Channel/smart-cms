@@ -1,4 +1,4 @@
-package com.smart.cms.user;
+package com.smart.cms.system.role;
 
 
 import com.baomidou.mybatisplus.annotation.TableName;

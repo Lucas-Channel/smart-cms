@@ -1,5 +1,7 @@
 package com.smart.cms.menu.vo;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -18,4 +20,7 @@ public class MenuVo {
     private String menuName;
     @ApiModelProperty(value = "菜单编号")
     private String menuCode;
+    @ApiModelProperty(value = "菜单id")
+    @JsonSerialize(using = ToStringSerializer.class)
+    private Long parentId;
 }

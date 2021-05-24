@@ -1,7 +1,7 @@
 package com.smart.cms.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.smart.cms.user.UserRole;
+import com.smart.cms.system.role.UserRole;
 
 import java.util.List;
 

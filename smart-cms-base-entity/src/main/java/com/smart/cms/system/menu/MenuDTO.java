@@ -13,7 +13,7 @@ import java.util.Objects;
 /**
  * 实体类
  *
- * @author Chill
+ * @author Lacus
  */
 @Data
 @TableName("smart_system_menu")
@@ -65,16 +65,11 @@ public class MenuDTO extends BaseEntityData implements Serializable {
 	private Integer sort;
 
 	/**
-	 * 菜单类型
+	 * 菜单类型(1、菜单，2、按钮)
 	 */
 	@ApiModelProperty(value = "菜单类型")
 	private Integer category;
 
-	/**
-	 * 操作按钮类型
-	 */
-	@ApiModelProperty(value = "操作按钮类型")
-	private Integer action;
 
 	/**
 	 * 备注
