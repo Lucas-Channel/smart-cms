@@ -1,6 +1,7 @@
 package com.smart.cms.system.client;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.smart.cms.base.BaseEntityData;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
@@ -16,7 +17,7 @@ import java.io.Serializable;
 @Data
 @TableName("oauth_client_details")// 后期统一调整
 @ApiModel(value = "Datasource对象", description = "数据源配置表")
-public class ClientDetail implements Serializable {
+public class ClientDetail extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = 2908517265351728375L;
 
     private String clientId;

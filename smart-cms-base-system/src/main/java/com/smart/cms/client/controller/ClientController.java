@@ -24,7 +24,7 @@ import java.util.List;
 /**
  *  客户端信息管理控制器
  *
- * @author Chill
+ * @author Lacus
  */
 @RestController
 @AllArgsConstructor
@@ -44,6 +44,7 @@ public class ClientController {
 	@ApiOperation(value = "分页-获取客户端信息列表", notes = "传入client")
 	public R<IPage<ClientDetail>> list(ClientDetail client, PageData pageData) {
 		QueryWrapper<ClientDetail> queryWrapper = new QueryWrapper<>();
+		queryWrapper.eq("del_flag", 0);
 		if (StringUtils.isNotBlank(client.getClientId())) {
 			queryWrapper.like("client_id", client.getClientId());
 		}
@@ -53,14 +54,14 @@ public class ClientController {
 	}
 
 	/**
-	* 新增
+	* 新增或修改
 	*/
-	@PostMapping("/save")
-	@ApiOperation(value = "新增", notes = "传入client")
-	public R save( @RequestBody ClientDetail authClient) {
+	@PostMapping("/saveOrUpdate")
+	@ApiOperation(value = "新增或修改", notes = "传入client")
+	public R saveOrUpdate( @RequestBody ClientDetail authClient) {
 		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 		authClient.setClientSecret(bCryptPasswordEncoder.encode(authClient.getClientSecret()));
-		boolean row = clientService.save(authClient);
+		boolean row = clientService.saveOrUpdate(authClient);
 		return row ? R.ok("操作成功") : R.failed("操作成功");
 	}
 
