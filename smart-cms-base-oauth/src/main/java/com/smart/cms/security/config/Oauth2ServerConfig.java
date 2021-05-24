@@ -2,7 +2,6 @@ package com.smart.cms.security.config;
 
 import com.smart.cms.security.properties.AuthProperties;
 import com.smart.cms.security.properties.TokenProperties;
-import com.smart.cms.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
