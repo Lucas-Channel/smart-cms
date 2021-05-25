@@ -13,6 +13,6 @@
         <module>smart-cms-product-service-api</module>
     </modules>
     <artifactId>smart-cms-biz-service-api</artifactId>
-
+    <description>微服务API集合，供服务间调用</description>
 
 </project>
