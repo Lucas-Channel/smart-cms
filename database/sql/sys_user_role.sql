@@ -21,17 +21,17 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for sys_user_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_role`;
-CREATE TABLE `sys_user_role`  (
-  `id` bigint(0) NOT NULL,
-  `user_id` bigint(0) NOT NULL,
-  `role_id` bigint(0) NOT NULL,
-  `create_time` datetime(0) DEFAULT NULL,
-  `create_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `update_time` datetime(0) DEFAULT NULL,
-  `update_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+CREATE TABLE `sys_user_role` (
+  `id` bigint NOT NULL,
+  `user_id` bigint NOT NULL,
+  `role_id` bigint NOT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `creator_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `update_time` datetime DEFAULT NULL,
+  `updater_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `del_flag` int DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user_role

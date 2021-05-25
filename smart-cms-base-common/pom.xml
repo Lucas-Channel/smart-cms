@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <description>业务基础公有模块，所有的模块都需要依赖common模块</description>
     <artifactId>smart-cms-base-common</artifactId>
-
+    <packaging>jar</packaging>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
