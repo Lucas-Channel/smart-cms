@@ -13,8 +13,6 @@
         <module>smart-cms-base-oauth</module>
         <module>smart-cms-base-system</module>
         <module>smart-cms-base-entity</module>
-        <module>smart-cms-biz-service</module>
-        <module>smart-cms-biz-service-api</module>
     </modules>
     <packaging>pom</packaging>
     <developers>
