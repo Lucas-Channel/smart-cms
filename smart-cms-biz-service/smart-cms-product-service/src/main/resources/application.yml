@@ -1,9 +1,9 @@
 server:
-  port: 8989
+  port: 8988
 
 spring:
   application:
-      name: smart-cms-system
+      name: smart-cms-product
   profiles:
     active: dev
   cloud:
