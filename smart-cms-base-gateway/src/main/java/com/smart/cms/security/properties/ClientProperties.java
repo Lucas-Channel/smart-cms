@@ -5,7 +5,7 @@ import lombok.Data;
 /**
  * 前后端分离，token必要的参数
  *
- * @author Lacus
+ * @author Lucas
  * @create 2021-04-27 11:25
  */
 @Data

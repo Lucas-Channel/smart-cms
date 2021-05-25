@@ -7,7 +7,7 @@ import com.smart.cms.system.menu.MenuDTO;
 /**
  * MenuMapper 接口
  *
- * @author Lacus
+ * @author Lucas
  */
 public interface MenuMapper extends BaseMapper<MenuDTO> {
 

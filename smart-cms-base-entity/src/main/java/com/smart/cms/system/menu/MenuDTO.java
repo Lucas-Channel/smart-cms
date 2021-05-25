@@ -13,7 +13,7 @@ import java.util.Objects;
 /**
  * 实体类
  *
- * @author Lacus
+ * @author Lucas
  */
 @Data
 @TableName("smart_system_menu")

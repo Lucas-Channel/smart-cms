@@ -6,7 +6,7 @@ import com.smart.cms.system.menu.MenuDTO;
 /**
  * 服务类
  *
- * @author Lacus
+ * @author Lucas
  */
 public interface IMenuService extends IService<MenuDTO> {
 

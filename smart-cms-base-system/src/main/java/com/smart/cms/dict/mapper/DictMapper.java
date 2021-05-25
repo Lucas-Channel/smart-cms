@@ -7,7 +7,7 @@ import com.smart.cms.system.dict.DictDTO;
 /**
  * MenuMapper 接口
  *
- * @author Lacus
+ * @author Lucas
  */
 public interface DictMapper extends BaseMapper<DictDTO> {
 

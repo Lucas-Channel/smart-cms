@@ -12,7 +12,7 @@ swagger: #接口注解文档
     name: ${spring.application.name} #api名称
     version: 1.0
     contact:
-      developer: Lacus #api开发者
+      developer: Lucas #api开发者
       email: 1175215747@qq.com #api开发者
 #mybatis:
 #  configuration:

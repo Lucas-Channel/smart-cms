@@ -3,7 +3,7 @@ package com.smart.cms.utils.redis;
 /**
  * redis 的 key
  *
- * @author Lacus
+ * @author Lucas
  * @create 2021-04-27 11:19
  */
 public class RedisCst {
