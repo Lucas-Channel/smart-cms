@@ -90,10 +90,10 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     }
 
     // 设置token存储
-    @Bean
-    public TokenStore tokenStore() {
-        return new JwtTokenStore(accessTokenConverter());
-    }
+//    @Bean
+//    public TokenStore tokenStore() {
+//        return new JwtTokenStore(accessTokenConverter());
+//    }
 
     /**
      * 使用非对称加密算法对token签名
