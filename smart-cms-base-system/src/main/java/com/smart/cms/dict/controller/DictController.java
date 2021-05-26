@@ -29,7 +29,6 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/menu")
 @Api(value = "菜单控制器", tags = "菜单控制器")
-@PreAuthorize(RoleConstant.HAS_ROLE_ADMIN)// 必须拥有超级管理员权限才可以访问这个类的接口
 public class DictController {
 
     private IDictService dictService;

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.smart.cms.authconstant.RoleConstant;
 import com.smart.cms.system.code.Datasource;
 import com.smart.cms.system.code.SystemCode;
 import com.smart.cms.systemcode.gener.CodeGenerator;
@@ -13,6 +14,7 @@ import com.smart.cms.utils.other.PageData;
 import com.smart.cms.utils.other.StringUtil;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -31,7 +33,6 @@ import java.util.Map;
 @AllArgsConstructor
 @RequestMapping("/code")
 @Api(value = "代码生成", tags = "代码生成")
-//@PreAuth(RoleConstant.HAS_ROLE_ADMINISTRATOR)
 public class CodeController {
 
 	private final ISystemCodeService codeService;
