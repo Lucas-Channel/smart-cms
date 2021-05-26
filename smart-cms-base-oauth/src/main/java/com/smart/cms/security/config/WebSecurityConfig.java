@@ -34,16 +34,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
-        http.csrf().disable().authorizeRequests()
-                .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
-                .and().authorizeRequests()
-                .antMatchers("/rsa/publicKey").permitAll()
-                .antMatchers(ArrayUtil.toArray(authProperties.getWhiteList(), String.class)).permitAll() // 对于白名单开发权限
-                .antMatchers("/v2/api-docs", "/swagger-resources/configuration/ui","/oauth/testApi",
-                        "/swagger-resources", "/swagger-resources/configuration/security",
-                        "/swagger-ui.html", "/webjars/**").permitAll()
-                .anyRequest().authenticated();
+        http.authorizeRequests()
+                .antMatchers("/oauth/**").hasRole("admin")
+                .antMatchers(ArrayUtil.toArray(authProperties.getWhiteList(), String.class)).permitAll()// 从配置文件中读取配置
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .permitAll()
+                .and()
+                .csrf()
+                .disable();
+//        http.csrf().disable().authorizeRequests()
+//                .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
+//                .and().authorizeRequests()
+//                .antMatchers("/rsa/publicKey").permitAll()
+//                .antMatchers(ArrayUtil.toArray(authProperties.getWhiteList(), String.class)).permitAll() // 对于白名单开发权限
+//                .antMatchers("/v2/api-docs", "/swagger-resources/configuration/ui","/oauth/testApi",
+//                        "/swagger-resources", "/swagger-resources/configuration/security",
+//                        "/swagger-ui.html", "/webjars/**").permitAll()
+//                .anyRequest().authenticated();
     }
 
     @Bean
