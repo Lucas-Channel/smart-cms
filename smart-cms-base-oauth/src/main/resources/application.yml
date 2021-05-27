@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-      name: smart-cms-auth
+    name: smart-cms-auth
   profiles:
     active: dev
   cloud:
