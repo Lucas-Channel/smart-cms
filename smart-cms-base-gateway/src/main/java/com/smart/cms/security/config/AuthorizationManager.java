@@ -18,6 +18,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 鉴权管理器，用于判断是否有资源的访问权限
@@ -46,6 +47,9 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
                 .map(GrantedAuthority::getAuthority)
                 .any(role -> {
                     role = role.replace(AuthConstant.AUTHORITY_PREFIX, "");
+                    if (Objects.equals("ADMIN", role)) {
+                        return true;
+                    }
                     List<PermissionVo> permissionVos = redisUtils.getHash(PERMISSION, role, PermissionVo.class);
                     if (permissionVos == null) {
                         return false;
