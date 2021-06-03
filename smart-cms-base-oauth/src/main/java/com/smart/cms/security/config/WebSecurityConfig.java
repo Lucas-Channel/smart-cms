@@ -36,7 +36,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/oauth/**").hasRole("admin")
+                .antMatchers("/oauth/**").hasRole("ADMIN")
                 .antMatchers(ArrayUtil.toArray(authProperties.getWhiteList(), String.class)).permitAll()// 从配置文件中读取配置
                 .anyRequest().authenticated()
                 .and()
