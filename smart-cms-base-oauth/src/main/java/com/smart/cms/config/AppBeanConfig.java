@@ -7,14 +7,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 /**
- * @author liuyongtao
- * @create 2019-05-21 10:11
+ * @author Lucas
+ * @create 2021-05-21 10:11
  */
 @Configuration
 public class AppBeanConfig {
 
     @Bean
-    @ConditionalOnMissingBean(UserDetailsService.class)
+    @ConditionalOnMissingBean(UserDetailsService.class)// 保证只有一个bean
     public UserDetailsService userDetailsService() {
         return new CustomUserDetailsService();
     }
