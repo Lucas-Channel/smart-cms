@@ -62,7 +62,7 @@ public class RoleController {
 
     @PostMapping("/saveOrUpdate")
     @ApiOperation(value = "新增或修改", notes = "传入menu")
-    public R saveOrUpdate(RoleBase roleBase) {
+    public R saveOrUpdate(@RequestBody RoleBase roleBase) {
         roleBase.setCreateTime(new Date());
         roleBase.setDelFlag(0);
        boolean row = roleService.saveOrUpdate(roleBase);

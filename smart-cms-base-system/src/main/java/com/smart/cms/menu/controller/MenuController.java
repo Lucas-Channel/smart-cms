@@ -79,7 +79,7 @@ public class MenuController {
 
     @PostMapping("/saveOrUpdate")
     @ApiOperation(value = "新增或修改", notes = "传入menu")
-    public R saveOrUpdate(MenuDTO menuDTO) {
+    public R saveOrUpdate(@RequestBody MenuDTO menuDTO) {
         menuDTO.setCreateTime(new Date());
         menuDTO.setDelFlag(0);
        boolean row = menuService.saveOrUpdate(menuDTO);

@@ -61,7 +61,7 @@ public class DictController {
 
     @PostMapping("/saveOrUpdate")
     @ApiOperation(value = "新增或修改", notes = "传入menu")
-    public R saveOrUpdate(DictDTO dictDTO) {
+    public R saveOrUpdate(@RequestBody DictDTO dictDTO) {
         dictDTO.setCreateTime(new Date());
         dictDTO.setDelFlag(0);
        boolean row = dictService.saveOrUpdate(dictDTO);
