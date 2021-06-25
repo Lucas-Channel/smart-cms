@@ -22,6 +22,8 @@ import java.io.Serializable;
 @ApiModel(value = "角色权限对象", description = "角色权限对象")
 public class PermissionDTO extends BaseEntityData implements Serializable {
 
+    private static final long serialVersionUID = 5196985930231945814L;
+
     @JsonSerialize(using = ToStringSerializer.class)
     @ApiModelProperty(value = "角色id")
     private Long roleId;

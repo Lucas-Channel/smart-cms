@@ -21,6 +21,7 @@ import java.util.Objects;
 public class MenuDTO extends BaseEntityData implements Serializable {
 
 
+	private static final long serialVersionUID = -738225716132899120L;
 	/**
 	 * 菜单父主键
 	 */
