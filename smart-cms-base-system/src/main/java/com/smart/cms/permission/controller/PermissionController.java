@@ -30,7 +30,6 @@ import java.util.Map;
 @PreAuthorize(RoleConstant.HAS_ROLE_ADMIN)// 必须拥有超级管理员权限才可以访问这个类的接口
 public class PermissionController {
 
-    @Autowired
     private IPermissionService service;
 
     @PostMapping("/allotPermission")
