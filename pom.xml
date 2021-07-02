@@ -15,6 +15,7 @@
         <module>smart-cms-base-entity</module>
         <module>smart-cms-biz-service</module>
         <module>smart-cms-biz-service-api</module>
+        <module>smart-cms-biz-ops</module>
     </modules>
     <packaging>pom</packaging>
     <developers>
