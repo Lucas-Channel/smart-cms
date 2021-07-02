@@ -1,94 +1,42 @@
 package com.smart.cms.quartz.service;
 
-public interface QuartzJobService {
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
+import com.baomidou.mybatisplus.extension.service.IService;
+import com.smart.cms.quartz.vo.QuartzJobRequestVO;
+import com.smart.cms.system.job.QuartzJobDTO;
+import com.smart.cms.utils.other.PageData;
+
+import java.util.Set;
+
+public interface QuartzJobService extends IService<QuartzJobDTO> {
 
     /**
      * 分页查询
-     * @param criteria 条件
-     * @param pageable 分页参数
      * @return /
      */
-    Object queryAll(JobQueryCriteria criteria, Pageable pageable);
-
-    /**
-     * 查询全部
-     * @param criteria 条件
-     * @return /
-     */
-    List<QuartzJob> queryAll(JobQueryCriteria criteria);
-
-    /**
-     * 分页查询日志
-     * @param criteria 条件
-     * @param pageable 分页参数
-     * @return /
-     */
-    Object queryAllLog(JobQueryCriteria criteria, Pageable pageable);
-
-    /**
-     * 查询全部
-     * @param criteria 条件
-     * @return /
-     */
-    List<QuartzLog> queryAllLog(JobQueryCriteria criteria);
+    R<IPage<QuartzJobDTO>> queryAll(QuartzJobRequestVO param, PageData pageData);
 
     /**
      * 创建
      * @param resources /
      */
-    void create(QuartzJob resources);
-
-    /**
-     * 编辑
-     * @param resources /
-     */
-    void update(QuartzJob resources);
+    R saveOrUpdateBack(QuartzJobDTO resources);
 
     /**
      * 删除任务
      * @param ids /
      */
-    void delete(Set<Long> ids);
-
-    /**
-     * 根据ID查询
-     * @param id ID
-     * @return /
-     */
-    QuartzJob findById(Long id);
+    R delete(Set<Long> ids);
 
     /**
      * 更改定时任务状态
-     * @param quartzJob /
      */
-    void updateIsPause(QuartzJob quartzJob);
+    R updateIsPause(Long id, int status);
 
     /**
      * 立即执行定时任务
-     * @param quartzJob /
      */
-    void execution(QuartzJob quartzJob);
+    R execution(Long id);
 
-    /**
-     * 导出定时任务
-     * @param queryAll 待导出的数据
-     * @param response /
-     * @throws IOException /
-     */
-    void download(List<QuartzJob> queryAll, HttpServletResponse response) throws IOException;
-
-    /**
-     * 导出定时任务日志
-     * @param queryAllLog 待导出的数据
-     * @param response /
-     * @throws IOException /
-     */
-    void downloadLog(List<QuartzLog> queryAllLog, HttpServletResponse response) throws IOException;
-
-    /**
-     * 执行子任务
-     * @param tasks /
-     * @throws InterruptedException /
-     */
-    void executionSubJob(String[] tasks) throws InterruptedException;
 }

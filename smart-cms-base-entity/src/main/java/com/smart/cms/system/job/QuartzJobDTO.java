@@ -39,7 +39,7 @@ public class QuartzJobDTO extends BaseEntityData implements Serializable {
     @ApiModelProperty(value = "cron表达式")
     private String cronExpression;
 
-    @ApiModelProperty(value = "状态，0暂时或1启动")
+    @ApiModelProperty(value = "状态，0暂时或1启动,-1异常")
     private int isPause = 0;
 
     @ApiModelProperty(value = "备注")

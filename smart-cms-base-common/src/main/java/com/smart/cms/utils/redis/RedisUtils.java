@@ -3,6 +3,8 @@ package com.smart.cms.utils.redis;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.alibaba.fastjson.JSONArray;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -11,9 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class RedisUtils {
+    private static final Logger log = LoggerFactory.getLogger(RedisUtils.class);
     @Autowired
     private RedisTemplate<String, String> stringRedisTemplate;
     @Resource
@@ -93,5 +94,28 @@ public class RedisUtils {
             list.add(BeanUtil.mapToBean(map, clazz, true, CopyOptions.create()));
         }
         return list;
+    }
+
+    /**
+     * 删除缓存
+     *
+     * @param keys 可以传一个值 或多个
+     */
+    public void del(String... keys) {
+        Collection<String> keySets = new ArrayList<>(Arrays.asList(keys));
+        if (keys != null && keys.length > 0) {
+            if (keys.length == 1) {
+                boolean result = redisTemplate.delete(keys[0]);
+                log.debug("--------------------------------------------");
+                log.debug(new StringBuilder("删除缓存：").append(keys[0]).append("，结果：").append(result).toString());
+                log.debug("--------------------------------------------");
+            } else {
+                Long count = redisTemplate.delete(keySets);
+                log.debug("--------------------------------------------");
+                log.debug("成功删除缓存：" + keySets.toString());
+                log.debug("缓存删除数量：" + count + "个");
+                log.debug("--------------------------------------------");
+            }
+        }
     }
 }

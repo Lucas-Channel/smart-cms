@@ -1,153 +1,90 @@
 package com.smart.cms.quartz.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.api.R;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.smart.cms.quartz.mapper.QuartzMapper;
+import com.smart.cms.quartz.service.QuartzJobService;
+import com.smart.cms.quartz.utils.QuartzManage;
+import com.smart.cms.quartz.vo.QuartzJobRequestVO;
+import com.smart.cms.system.dict.DictDTO;
+import com.smart.cms.system.job.QuartzJobDTO;
+import com.smart.cms.utils.other.PageData;
+import com.smart.cms.utils.redis.RedisUtils;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
+import org.quartz.CronExpression;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
+
 @RequiredArgsConstructor
 @Service(value = "quartzJobService")
-public class QuartzJobServiceImpl implements QuartzJobService {
+public class QuartzJobServiceImpl  extends ServiceImpl<QuartzMapper, QuartzJobDTO> implements QuartzJobService {
 
-    private final QuartzJobRepository quartzJobRepository;
-    private final QuartzLogRepository quartzLogRepository;
     private final QuartzManage quartzManage;
     private final RedisUtils redisUtils;
 
     @Override
-    public Object queryAll(JobQueryCriteria criteria, Pageable pageable){
-        return PageUtil.toPage(quartzJobRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder),pageable));
-    }
-
-    @Override
-    public Object queryAllLog(JobQueryCriteria criteria, Pageable pageable){
-        return PageUtil.toPage(quartzLogRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder),pageable));
-    }
-
-    @Override
-    public List<QuartzJob> queryAll(JobQueryCriteria criteria) {
-        return quartzJobRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder));
-    }
-
-    @Override
-    public List<QuartzLog> queryAllLog(JobQueryCriteria criteria) {
-        return quartzLogRepository.findAll((root, criteriaQuery, criteriaBuilder) -> QueryHelp.getPredicate(root,criteria,criteriaBuilder));
-    }
-
-    @Override
-    public QuartzJob findById(Long id) {
-        QuartzJob quartzJob = quartzJobRepository.findById(id).orElseGet(QuartzJob::new);
-        ValidationUtil.isNull(quartzJob.getId(),"QuartzJob","id",id);
-        return quartzJob;
+    public R<IPage<QuartzJobDTO>> queryAll(QuartzJobRequestVO param, PageData pageData){
+        QueryWrapper<QuartzJobDTO> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("del_flag", 0);
+        if (StringUtils.isNotBlank(param.getJobName())) {
+            queryWrapper.like("job_name", param.getJobName());
+        }
+        if (StringUtils.isNotBlank(String.valueOf(param.getIsPause()))) {
+            queryWrapper.like("is_pause", param.getIsPause());
+        }
+        Page<QuartzJobDTO> page = new Page<>(pageData.getCurrent(), pageData.getSize());
+        IPage<QuartzJobDTO> pages = this.page(page, queryWrapper);
+        return R.ok(pages);
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void create(QuartzJob resources) {
+    public R saveOrUpdateBack(QuartzJobDTO resources) {
         if (!CronExpression.isValidExpression(resources.getCronExpression())){
-            throw new BadRequestException("cron表达式格式错误");
+            // cron表达式格式错误
+            return R.failed("cron表达式格式错误");
         }
-        resources = quartzJobRepository.save(resources);
-        quartzManage.addJob(resources);
+        boolean r = this.saveOrUpdate(resources);
+        return r ? R.ok("成功") : R.failed("失败");
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void update(QuartzJob resources) {
-        if (!CronExpression.isValidExpression(resources.getCronExpression())){
-            throw new BadRequestException("cron表达式格式错误");
-        }
-        if(StringUtils.isNotBlank(resources.getSubTask())){
-            List<String> tasks = Arrays.asList(resources.getSubTask().split("[,，]"));
-            if (tasks.contains(resources.getId().toString())) {
-                throw new BadRequestException("子任务中不能添加当前任务ID");
-            }
-        }
-        resources = quartzJobRepository.save(resources);
-        quartzManage.updateJobCron(resources);
-    }
-
-    @Override
-    public void updateIsPause(QuartzJob quartzJob) {
-        if (quartzJob.getIsPause()) {
-            quartzManage.resumeJob(quartzJob);
-            quartzJob.setIsPause(false);
-        } else {
+    public R updateIsPause(Long id, int status) {
+        QuartzJobDTO quartzJob = baseMapper.selectById(id);
+        if (status == 0) {
+            // 暂停定时任务
             quartzManage.pauseJob(quartzJob);
-            quartzJob.setIsPause(true);
+        } else {
+            // 开启定时任务
+            quartzManage.resumeJob(quartzJob);
         }
-        quartzJobRepository.save(quartzJob);
+        quartzJob.setIsPause(status);
+        int row = baseMapper.updateById(quartzJob);
+        return row > 0 ? R.ok("操作成功") : R.failed("操作失败");
     }
 
     @Override
-    public void execution(QuartzJob quartzJob) {
+    public R execution(Long id) {
+        QuartzJobDTO quartzJob = this.lambdaQuery().eq(QuartzJobDTO::getId, id).eq(QuartzJobDTO::getDelFlag, 0).one();
         quartzManage.runJobNow(quartzJob);
+        return R.ok("成功");
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delete(Set<Long> ids) {
+    public R delete(Set<Long> ids) {
         for (Long id : ids) {
-            QuartzJob quartzJob = findById(id);
+            QuartzJobDTO quartzJob = this.lambdaQuery().eq(QuartzJobDTO::getId, id).eq(QuartzJobDTO::getDelFlag, 0).one();
             quartzManage.deleteJob(quartzJob);
-            quartzJobRepository.delete(quartzJob);
         }
+       boolean del = this.removeByIds(ids);
+        return del ? R.ok("成功") : R.failed("失败");
     }
 
-    @Async
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void executionSubJob(String[] tasks) throws InterruptedException {
-        for (String id : tasks) {
-            QuartzJob quartzJob = findById(Long.parseLong(id));
-            // 执行任务
-            String uuid = IdUtil.simpleUUID();
-            quartzJob.setUuid(uuid);
-            // 执行任务
-            execution(quartzJob);
-            // 获取执行状态，如果执行失败则停止后面的子任务执行
-            Boolean result = (Boolean) redisUtils.get(uuid);
-            while (result == null) {
-                // 休眠5秒，再次获取子任务执行情况
-                Thread.sleep(5000);
-                result = (Boolean) redisUtils.get(uuid);
-            }
-            if(!result){
-                redisUtils.del(uuid);
-                break;
-            }
-        }
-    }
-
-    @Override
-    public void download(List<QuartzJob> quartzJobs, HttpServletResponse response) throws IOException {
-        List<Map<String, Object>> list = new ArrayList<>();
-        for (QuartzJob quartzJob : quartzJobs) {
-            Map<String,Object> map = new LinkedHashMap<>();
-            map.put("任务名称", quartzJob.getJobName());
-            map.put("Bean名称", quartzJob.getBeanName());
-            map.put("执行方法", quartzJob.getMethodName());
-            map.put("参数", quartzJob.getParams());
-            map.put("表达式", quartzJob.getCronExpression());
-            map.put("状态", quartzJob.getIsPause() ? "暂停中" : "运行中");
-            map.put("描述", quartzJob.getDescription());
-            map.put("创建日期", quartzJob.getCreateTime());
-            list.add(map);
-        }
-        FileUtil.downloadExcel(list, response);
-    }
-
-    @Override
-    public void downloadLog(List<QuartzLog> queryAllLog, HttpServletResponse response) throws IOException {
-        List<Map<String, Object>> list = new ArrayList<>();
-        for (QuartzLog quartzLog : queryAllLog) {
-            Map<String,Object> map = new LinkedHashMap<>();
-            map.put("任务名称", quartzLog.getJobName());
-            map.put("Bean名称", quartzLog.getBeanName());
-            map.put("执行方法", quartzLog.getMethodName());
-            map.put("参数", quartzLog.getParams());
-            map.put("表达式", quartzLog.getCronExpression());
-            map.put("异常详情", quartzLog.getExceptionDetail());
-            map.put("耗时/毫秒", quartzLog.getTime());
-            map.put("状态", quartzLog.getIsSuccess() ? "成功" : "失败");
-            map.put("创建日期", quartzLog.getCreateTime());
-            list.add(map);
-        }
-        FileUtil.downloadExcel(list, response);
-    }
 }
