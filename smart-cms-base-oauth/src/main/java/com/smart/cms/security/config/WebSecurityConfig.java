@@ -36,26 +36,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/oauth/**").hasRole("ADMIN")
                 .antMatchers(ArrayUtil.toArray(authProperties.getWhiteList(), String.class)).permitAll()// 从配置文件中读取配置
                 .anyRequest().authenticated()
-                .and()
-                .formLogin()
 //                .usernameParameter()
 //                .passwordParameter()
-                .permitAll()
                 .and()
                 .csrf()
                 .disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);// 禁用session
-//        http.csrf().disable().authorizeRequests()
-//                .requestMatchers(EndpointRequest.toAnyEndpoint()).permitAll()
-//                .and().authorizeRequests()
-//                .antMatchers("/rsa/publicKey").permitAll()
-//                .antMatchers(ArrayUtil.toArray(authProperties.getWhiteList(), String.class)).permitAll() // 对于白名单开发权限
-//                .antMatchers("/v2/api-docs", "/swagger-resources/configuration/ui","/oauth/testApi",
-//                        "/swagger-resources", "/swagger-resources/configuration/security",
-//                        "/swagger-ui.html", "/webjars/**").permitAll()
-//                .anyRequest().authenticated();
     }
 
     @Bean

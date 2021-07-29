@@ -65,8 +65,12 @@ public class AuthController {
     }
 
     @GetMapping("/testApi")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     public R<String> test() {
+        return R.ok("测试");
+    }
+    @GetMapping("/testApi2")
+    public R<String> test2() {
         return R.ok("测试");
     }
 }
