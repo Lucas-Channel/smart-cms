@@ -11,6 +11,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @Date: 2021/7/2 17:12
  * @Version: 1.0
  */
-@Mapper
 public interface NoticeMapper extends BaseMapper<NoticeDTO> {
 }

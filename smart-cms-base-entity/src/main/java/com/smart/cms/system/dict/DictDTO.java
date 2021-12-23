@@ -16,7 +16,7 @@ import java.io.Serializable;
  * @Version: 1.0
  */
 @Data
-@TableName("smart_system_dict")
+@TableName("smart_system_dict_b")
 @ApiModel(value = "字典对象", description = "字典对象")
 public class DictDTO extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = 7454441585390898598L;
@@ -26,6 +26,7 @@ public class DictDTO extends BaseEntityData implements Serializable {
     private String dictName;
     @ApiModelProperty(value = "排序")
     private String sort;
-
+    @ApiModelProperty(value = "父级id")
+    private Long parentId;
 
 }

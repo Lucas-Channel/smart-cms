@@ -16,7 +16,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableFeignClients
 @EnableDiscoveryClient
-@MapperScan("com.smart.cms.**")
+@MapperScan("com.smart.cms.**.mapper.**")
 public class SmartSystemApplication {
     // 如果项目会用到城市，建议启动的时候就加载数据到缓存
     public static void main(String[] args) {

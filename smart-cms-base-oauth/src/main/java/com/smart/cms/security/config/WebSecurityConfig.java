@@ -42,7 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .passwordParameter()
                 .and()
                 .csrf()
-                .disable().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);// 禁用session
+                .disable().httpBasic().disable();
     }
 
     @Bean

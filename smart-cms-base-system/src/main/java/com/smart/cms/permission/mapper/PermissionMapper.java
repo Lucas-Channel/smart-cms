@@ -19,7 +19,6 @@ import java.util.List;
  * @Date: 2021/6/25 10:44
  * @Version: 1.0
  */
-@Mapper
 public interface PermissionMapper extends BaseMapper<PermissionDTO> {
 
     @Select("SELECT meu.id menu_id, meu.parent_id, meu.name menu_name, if(rp.id is null, 0, 1) is_allot from smart_system_menu meu\n" +
