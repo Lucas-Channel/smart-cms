@@ -14,7 +14,9 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * TODO
@@ -56,6 +58,22 @@ public class InvOrgController {
         initData(invOrg);
         boolean b = invOrgService.saveOrUpdate(invOrg);
         return b ? R.ok("操作成功") : R.failed("操作成功");
+    }
+
+    @DeleteMapping("/deleteBatchByIds")
+    @ApiOperation(value = "批量删除", notes = "批量删除")
+    public R deleteBatchByIds(@RequestBody List<Long> ids) {
+        List<InvOrg> dels = new ArrayList<>();
+        ids.forEach( i -> {
+            InvOrg a = new InvOrg();
+            a.setId(i);
+            a.setDelFlag(1);
+            a.setUpdateTime(new Date());
+            a.setUpdaterCode(AuthUserInfo.getLoginUserName());
+            dels.add(a);
+        });
+        boolean b = invOrgService.updateBatchById(dels);
+        return b ? R.ok("删除成功") : R.failed("删除成功");
     }
 
     protected void initData(InvOrg invOrg) {

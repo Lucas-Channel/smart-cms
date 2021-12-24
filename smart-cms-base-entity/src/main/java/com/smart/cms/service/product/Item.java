@@ -18,7 +18,7 @@ import java.math.BigDecimal;
 @Data
 @TableName("smart_service_item_b")
 @ApiModel(value = "产品对象", description = "产品对象")
-public class Item extends BaseEntityData implements Serializable {
+public class Item extends BaseEntityData implements Serializable, Cloneable{
     private String itemName;
 
     private String itemCode;
@@ -40,4 +40,15 @@ public class Item extends BaseEntityData implements Serializable {
     private BigDecimal itemThick;
 
     private String publishStatus;
+
+    @Override
+    public Object clone() {
+        Item item = null;
+        try{
+            item = (Item)super.clone();
+        }catch(CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return item;
+    }
 }
