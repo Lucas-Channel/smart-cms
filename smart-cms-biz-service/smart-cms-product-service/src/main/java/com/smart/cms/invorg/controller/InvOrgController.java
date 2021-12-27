@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smart.cms.invorg.service.InvOrgService;
 import com.smart.cms.service.product.InvOrg;
 import com.smart.cms.utils.AuthUserInfo;
+import com.smart.cms.utils.CommonInitData;
 import com.smart.cms.utils.other.PageData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -47,6 +48,9 @@ public class InvOrgController {
         if (StringUtils.isNotBlank(invOrg.getEnableFlag())) {
             queryWrapper.like("enable_flag", invOrg.getEnableFlag());
         }
+        if (StringUtils.isNotBlank(invOrg.getAddress())) {
+            queryWrapper.like("address", invOrg.getAddress());
+        }
         Page<InvOrg> page = new Page<>(pageData.getCurrent(), pageData.getSize());
         IPage<InvOrg> pages = invOrgService.page(page, queryWrapper);
         return R.ok(pages);
@@ -55,7 +59,7 @@ public class InvOrgController {
     @PostMapping("/saveOrUpdate")
     @ApiOperation(value = "新增", notes = "传入对象")
     public R saveOrUpdate(@RequestBody InvOrg invOrg) {
-        initData(invOrg);
+        CommonInitData.initData(invOrg);
         boolean b = invOrgService.saveOrUpdate(invOrg);
         return b ? R.ok("操作成功") : R.failed("操作成功");
     }
@@ -76,13 +80,4 @@ public class InvOrgController {
         return b ? R.ok("删除成功") : R.failed("删除成功");
     }
 
-    protected void initData(InvOrg invOrg) {
-        if (null != invOrg.getId()) {
-            invOrg.setCreateTime(new Date());
-            invOrg.setCreatorCode(AuthUserInfo.getLoginUserName());
-        }
-        invOrg.setUpdateTime(new Date());
-        invOrg.setUpdaterCode(AuthUserInfo.getLoginUserName());
-        invOrg.setDelFlag(0);
-    }
 }

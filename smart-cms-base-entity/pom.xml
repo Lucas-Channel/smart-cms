@@ -42,6 +42,23 @@
             <artifactId>springfox-boot-starter</artifactId>
             <version>${springfox.boot.starter.version}</version>
         </dependency>
+
+        <!-- easyPoi 依赖，如果要使用excel的POI需要注意版本问题，冲突会导致easyPOI失效 -->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-base</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-web</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-annotation</artifactId>
+            <version>3.2.0</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>${project.artifactId}</finalName>

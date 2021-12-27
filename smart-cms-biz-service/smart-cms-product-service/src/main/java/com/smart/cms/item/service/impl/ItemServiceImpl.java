@@ -8,6 +8,7 @@ import com.smart.cms.item.service.ItemService;
 import com.smart.cms.item.vo.ItemVo;
 import com.smart.cms.service.product.Item;
 import com.smart.cms.utils.AuthUserInfo;
+import com.smart.cms.utils.CommonInitData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +32,7 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
     @Transactional(rollbackFor = Exception.class)
     public R saveOrUpdateLocal(ItemVo itemVo) {
         Item item = (Item)itemVo.clone();
-        initData(item);
+        CommonInitData.initData(item);
         int row = 0;
         if (null != item.getId()) {
             row = baseMapper.updateById(item);
@@ -43,15 +44,5 @@ public class ItemServiceImpl extends ServiceImpl<ItemMapper, Item> implements It
         });
         boolean b1 = priceDetailService.saveOrUpdateBatch(itemVo.getPriceDetails());
         return row > 0 && b1 ? R.ok("操作成功") : R.failed("操作成功");
-    }
-
-    protected void initData(Item item) {
-        if (null != item.getId()) {
-            item.setCreateTime(new Date());
-            item.setCreatorCode(AuthUserInfo.getLoginUserName());
-        }
-        item.setUpdateTime(new Date());
-        item.setUpdaterCode(AuthUserInfo.getLoginUserName());
-        item.setDelFlag(0);
     }
 }

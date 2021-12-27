@@ -16,3 +16,7 @@ logging:
     org:
       springframework:
         security: DEBUG
+# 上传文件临时存放地址，每日凌晨清除文件
+file:
+  upload:
+    temp: /tmp

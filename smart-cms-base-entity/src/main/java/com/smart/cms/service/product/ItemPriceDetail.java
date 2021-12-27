@@ -1,5 +1,6 @@
 package com.smart.cms.service.product;
 
+import cn.afterturn.easypoi.excel.annotation.Excel;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.smart.cms.base.BaseEntityData;
 import io.swagger.annotations.ApiModel;
@@ -32,7 +33,8 @@ public class ItemPriceDetail extends BaseEntityData implements Serializable {
     private BigDecimal unitVipSellingPrice;
     // 产品坐标位置
     private String coordinates;
-    // 计价单位
+    // 计价单位，@Excel注解用于导入导出
+    @Excel(name = "单位")
     private String uomCode;
     // 有效期
     private Date expireDateFrom;
