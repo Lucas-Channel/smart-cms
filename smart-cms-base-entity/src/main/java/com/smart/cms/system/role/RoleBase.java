@@ -8,7 +8,7 @@ import javax.persistence.Column;
 import java.io.Serializable;
 
 @Data
-@TableName("sys_role")
+@TableName("smart_role")
 public class RoleBase extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = 2220088284222413966L;
     /**

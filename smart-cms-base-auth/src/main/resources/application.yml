@@ -1,0 +1,37 @@
+server:
+  port: 8999
+
+spring:
+  application:
+    name: smart-cms-auth
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848/ # 配置nacos注册中心
+  redis:
+    host: localhost
+    port: 6379
+    database: 8
+    timeout: 1500
+    jedis:
+      pool:
+        maxIdle: 999
+        minIdle: 20
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+auth:
+  token:
+    alias: jwt
+    jwtFileName: jwt.jks
+    jwtPassword: yuntuo18419
+# 日志
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG

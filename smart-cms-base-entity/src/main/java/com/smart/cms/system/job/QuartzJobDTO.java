@@ -16,7 +16,7 @@ import java.io.Serializable;
  * @Version: 1.0
  */
 @Data
-@TableName("smart_system_quartz_job")
+//@TableName("smart_system_quartz_job")
 @ApiModel(value = "定时任务", description = "定时任务")
 public class QuartzJobDTO extends BaseEntityData implements Serializable {
 

@@ -11,7 +11,7 @@ import com.smart.cms.utils.other.PageData;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -30,7 +30,7 @@ import java.util.List;
 @RequestMapping("/user")
 @ApiIgnore
 @Api(value = "用户管理", tags = "接口")
-@PreAuthorize(RoleConstant.HAS_ROLE_ADMIN)
+//@PreAuthorize(RoleConstant.HAS_ROLE_ADMIN)
 public class UserController {
     private IUserService userService;
 

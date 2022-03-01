@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-      name: smart-cms-system
+      name: smart-cms-base-system
   profiles:
     active: dev
   cloud:

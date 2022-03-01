@@ -34,9 +34,9 @@ public class ClientDetail extends BaseEntityData implements Serializable {
 
     private String authorities;
 
-    private String accessTokenValidity;
+    private Integer accessTokenValidity;
 
-    private String refreshTokenValidity;
+    private Integer refreshTokenValidity;
 
     private String additionalInformation;
 

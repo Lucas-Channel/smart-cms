@@ -1,36 +1,34 @@
 package com.smart.cms.system.permission;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.smart.cms.base.BaseEntityData;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * TODO
  *
  * @Author: huilai.huang
- * @Date: 2021/6/25 10:46
+ * @Date: 2022/3/1 16:07
  * @Version: 1.0
  */
 @Data
-@TableName("smart_system_role_permission")
-@ApiModel(value = "角色权限对象", description = "角色权限对象")
+@TableName("smart_system_permission")
+@ApiModel(value = "权限对象", description = "权限对象")
 public class PermissionDTO extends BaseEntityData implements Serializable {
+    private String name;
 
-    private static final long serialVersionUID = 5196985930231945814L;
-
-    @JsonSerialize(using = ToStringSerializer.class)
-    @ApiModelProperty(value = "角色id")
-    private Long roleId;
-
-    @JsonSerialize(using = ToStringSerializer.class)
-    @ApiModelProperty(value = "菜单id")
     private Long menuId;
 
+    private String urlPerm;
 
+    private String btnPerm;
+
+    // 有权限的角色编号集合
+    @TableField(exist = false)
+    private List<String> roles;
 }

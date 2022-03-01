@@ -30,22 +30,10 @@ public class MenuDTO extends BaseEntityData implements Serializable {
 	private Long parentId;
 
 	/**
-	 * 菜单编号
-	 */
-	@ApiModelProperty(value = "菜单编号")
-	private String code;
-
-	/**
 	 * 菜单名称
 	 */
 	@ApiModelProperty(value = "菜单名称")
 	private String name;
-
-	/**
-	 * 菜单别名
-	 */
-	@ApiModelProperty(value = "菜单别名")
-	private String alias;
 
 	/**
 	 * 请求地址
@@ -54,10 +42,10 @@ public class MenuDTO extends BaseEntityData implements Serializable {
 	private String path;
 
 	/**
-	 * 菜单资源
+	 * 菜单图标
 	 */
-	@ApiModelProperty(value = "菜单资源")
-	private String source;
+	@ApiModelProperty(value = "菜单图标")
+	private String icon;
 
 	/**
 	 * 排序
@@ -65,18 +53,14 @@ public class MenuDTO extends BaseEntityData implements Serializable {
 	@ApiModelProperty(value = "排序")
 	private Integer sort;
 
-	/**
-	 * 菜单类型(1、菜单，2、按钮)
-	 */
-	@ApiModelProperty(value = "菜单类型")
-	private Integer category;
-
 
 	/**
 	 * 备注
 	 */
 	@ApiModelProperty(value = "备注")
 	private String remark;
+
+	private Integer status;
 
 
 

@@ -32,7 +32,7 @@ spring:
             - StripPrefix=1
         - id: smart-system
           # lb代表从注册中心获取服务，且已负载均衡方式转发
-          uri: lb://smart-cms-system
+          uri: lb://smart-cms-base-system
           predicates:
             - Path=/smart-system/**
           # 加上StripPrefix=1，否则转发到后端服务时会带上consumer前缀
@@ -42,7 +42,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: 'http://localhost:8999/rsa/publicKey' # 获取公钥
+          jwk-set-uri: 'http://localhost:8999/oauth/public-key' # 获取公钥
   redis:
     host: localhost
     port: 6379
@@ -53,11 +53,15 @@ spring:
         maxIdle: 999
         minIdle: 20
 
-# 自己定义安全配置
-secure:
-  white-list:
-    - "/smart-auth/oauth/token"  # 获取token或者刷新token
-    - "/smart-auth/oauth/check_token"  # 获取token或者刷新token
-    - "/smart-auth/rsa/publicKey"  # 获取公钥
-  need-check:
-    - "/smart-auth/oauth/testApi"
+# 白名单(忽略鉴权)配置
+security:
+  ignoreUrls:
+    # 登录接口
+    - /smart-auth/oauth/token/**
+    # Knife4j
+    - /webjars/**
+    - /doc.html
+    - /swagger-resources/**
+    - /*/v2/api-docs
+    # 系统服务
+    - /smart-system/api/**

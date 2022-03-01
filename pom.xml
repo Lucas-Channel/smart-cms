@@ -16,6 +16,8 @@
         <module>smart-cms-biz-service</module>
         <module>smart-cms-biz-service-api</module>
         <module>smart-cms-biz-ops</module>
+        <module>smart-cms-base-auth</module>
+        <module>smart-cms-base-gateway-zuul</module>
     </modules>
     <packaging>pom</packaging>
     <developers>

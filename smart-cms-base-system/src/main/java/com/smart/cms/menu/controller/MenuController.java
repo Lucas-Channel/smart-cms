@@ -12,7 +12,7 @@ import com.smart.cms.utils.other.PageData;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -30,7 +30,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/menu")
 @Api(value = "菜单控制器", tags = "菜单控制器")
-@PreAuthorize(RoleConstant.HAS_ROLE_ADMIN)// 必须拥有超级管理员权限才可以访问这个类的接口
+//@PreAuthorize(RoleConstant.HAS_ROLE_ADMIN)// 必须拥有超级管理员权限才可以访问这个类的接口
 public class MenuController {
 
     private IMenuService menuService;

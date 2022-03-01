@@ -20,8 +20,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for sys_user_role
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_user_role`;
-CREATE TABLE `sys_user_role` (
+DROP TABLE IF EXISTS `smart_user_role`;
+CREATE TABLE `smart_user_role` (
   `id` bigint NOT NULL,
   `user_id` bigint NOT NULL,
   `role_id` bigint NOT NULL,
@@ -36,6 +36,6 @@ CREATE TABLE `sys_user_role` (
 -- ----------------------------
 -- Records of sys_user_role
 -- ----------------------------
-INSERT INTO `sys_user_role` VALUES (1, 1, 1001, '2021-04-26 09:50:37', NULL, NULL, NULL, 0);
+INSERT INTO `smart_user_role` VALUES (1, 1, 1001, '2021-04-26 09:50:37', NULL, NULL, NULL, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

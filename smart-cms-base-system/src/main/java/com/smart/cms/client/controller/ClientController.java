@@ -1,11 +1,14 @@
 package com.smart.cms.client.controller;
 
+import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.lang.Assert;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smart.cms.authconstant.RoleConstant;
 import com.smart.cms.client.service.IClientService;
+import com.smart.cms.common.Result;
 import com.smart.cms.system.client.ClientDetail;
 import com.smart.cms.utils.other.PageData;
 import io.swagger.annotations.Api;
@@ -13,7 +16,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
@@ -31,7 +34,7 @@ import java.util.List;
 @RequestMapping("/client")
 @ApiIgnore
 @Api(value = "客户端信息管理", tags = "接口")
-@PreAuthorize(RoleConstant.HAS_ROLE_ADMIN)
+//@PreAuthorize(RoleConstant.HAS_ROLE_ADMIN)
 public class ClientController {
 
 	private final IClientService clientService;
@@ -75,5 +78,11 @@ public class ClientController {
 		return R.ok(clientService.removeByIds(ids));
 	}
 
-
+	@ApiOperation(hidden = true, value = "获取 OAuth2 客户端认证信息", notes = "Feign 调用")
+	@GetMapping("/getOAuth2ClientById")
+	public Result<ClientDetail> getOAuth2ClientById(@RequestParam String clientId) {
+		ClientDetail client = clientService.lambdaQuery().eq(ClientDetail::getClientId, clientId).one();
+		Assert.isTrue(client!=null, "OAuth2 客户端不存在");
+		return Result.success(client);
+	}
 }

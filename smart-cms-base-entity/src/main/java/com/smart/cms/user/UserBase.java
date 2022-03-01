@@ -1,5 +1,6 @@
 package com.smart.cms.user;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.smart.cms.base.BaseEntityData;
 import lombok.Data;
@@ -7,9 +8,10 @@ import lombok.Data;
 import javax.persistence.Column;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Data
-@TableName("sys_user")
+@TableName("smart_user")
 public class UserBase extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = 2220088284225413963L;
     @Column
@@ -32,4 +34,19 @@ public class UserBase extends BaseEntityData implements Serializable {
     private String descritpion;
     @Column
     private String iconUrl;
+    /**
+     * 用户状态 ["0 禁用","1启用"]
+     */
+    private Integer status;
+
+    /**
+     * 用户角色编码集合 ["ROOT","ADMIN"]
+     */
+    @TableField(exist = false)
+    private List<String> roles;
+
+    /**
+     * 部门ID
+     */
+    private Long deptId;
 }

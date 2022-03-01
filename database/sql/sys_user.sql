@@ -20,8 +20,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 -- Table structure for sys_user
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_user`;
-CREATE TABLE `sys_user`  (
+DROP TABLE IF EXISTS ` smart_user`;
+CREATE TABLE ` smart_user`  (
   `id` bigint(0) NOT NULL,
   `username` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `usercode` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
@@ -37,12 +37,14 @@ CREATE TABLE `sys_user`  (
   `updater_code` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `update_time` datetime(0) DEFAULT NULL,
   `del_flag` int DEFAULT NULL,
+  `status` int DEFAULT 1,
+  `dept_id` int DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of sys_user
+-- Records of  smart_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'zhangsan', 'zhangsan', '$2a$10$kg0zVMoYtizHLnXnuHral.rThfK44BYTM0ncrEMIu.ac8lX0Yi.Zy', '111111', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0);
+INSERT INTO ` smart_user` VALUES (1, 'zhangsan', 'zhangsan', '$2a$10$kg0zVMoYtizHLnXnuHral.rThfK44BYTM0ncrEMIu.ac8lX0Yi.Zy', '111111', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0,1,1);
 
 SET FOREIGN_KEY_CHECKS = 1;

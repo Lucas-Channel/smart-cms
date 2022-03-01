@@ -14,7 +14,7 @@ import java.io.Serializable;
  * user与role关联关系，多对多
  */
 @Data
-@TableName("sys_user_role")
+@TableName("smart_user_role")
 public class UserRole extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = 2220088284225413966L;
     // 用户id

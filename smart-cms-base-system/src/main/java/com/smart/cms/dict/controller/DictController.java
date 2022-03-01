@@ -11,7 +11,7 @@ import com.smart.cms.utils.other.PageData;
 import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.access.prepost.PreAuthorize;
+//import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -27,7 +27,7 @@ import java.util.List;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/menu")
+@RequestMapping("/dict")
 @Api(value = "菜单控制器", tags = "菜单控制器")
 public class DictController {
 
