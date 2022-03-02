@@ -4,7 +4,7 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.io.IoUtil;
 import com.smart.cms.common.ResultCode;
-import com.smart.cms.constant.SecurityConstants;
+import com.smart.cms.common.SecurityConstants;
 import com.smart.cms.util.ResponseUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;

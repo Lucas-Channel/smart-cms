@@ -5,7 +5,7 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 import com.nimbusds.jose.JWSObject;
 import com.smart.cms.common.ResultCode;
-import com.smart.cms.constant.SecurityConstants;
+import com.smart.cms.common.SecurityConstants;
 import com.smart.cms.util.ResponseUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;

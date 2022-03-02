@@ -10,7 +10,6 @@
     <modules>
         <module>smart-cms-base-common</module>
         <module>smart-cms-base-gateway</module>
-        <module>smart-cms-base-oauth</module>
         <module>smart-cms-base-system</module>
         <module>smart-cms-base-entity</module>
         <module>smart-cms-biz-service</module>

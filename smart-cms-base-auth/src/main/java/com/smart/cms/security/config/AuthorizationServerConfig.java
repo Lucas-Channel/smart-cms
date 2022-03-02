@@ -146,8 +146,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Bean
     public KeyPair keyPair() {
-        KeyStoreKeyFactory factory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "yuntuo18419".toCharArray());
-        KeyPair keyPair = factory.getKeyPair("jwt", "yuntuo18419".toCharArray());
+        KeyStoreKeyFactory factory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "123456".toCharArray());
+        KeyPair keyPair = factory.getKeyPair("jwt", "123456".toCharArray());
         return keyPair;
     }
 
