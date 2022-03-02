@@ -37,6 +37,9 @@ public class SysUserDetailsServiceImpl implements UserDetailsService {
         paramsMap.put("del_flag", 0);
         paramsMap.put("status", 1);
         List<UserBase> userBases = userMapper.selectByMap(paramsMap);
+        userBases.forEach(it -> {
+            it.setRoles(userMapper.listByUserId(it.getId()));
+        });
         if (!CollectionUtils.isEmpty(userBases)) {
             userDetails = new SysUserDetails(userBases.get(0));
         }

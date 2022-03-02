@@ -2,6 +2,9 @@ package com.smart.cms.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.smart.cms.user.UserBase;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * TODO
@@ -11,14 +14,5 @@ import com.smart.cms.user.UserBase;
  * @Version: 1.0
  */
 public interface UserMapper extends BaseMapper<UserBase> {
-    /**
-     * 通过用户code 查询用户信息
-     *
-     * @param userCode 用户code
-     * @return UserPo
-     * @author LiuYongTao
-     * @date 2018/11/5 16:09
-     */
-
-    UserBase findUserInfoByUsercodeAndDelFlag(String userCode, int delFlag);
+    List<String> listByUserId(@Param("userId") Long userId);
 }
