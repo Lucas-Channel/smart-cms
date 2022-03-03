@@ -8,6 +8,7 @@ import com.smart.cms.common.Result;
 import com.smart.cms.common.ResultCode;
 import com.smart.cms.constant.SecurityConstants;
 import com.smart.cms.security.core.clientdetails.ClientDetailsServiceImpl;
+import com.smart.cms.security.core.mobile.SmsCodeTokenGranter;
 import com.smart.cms.security.core.user.SysUserDetails;
 import com.smart.cms.security.core.user.SysUserDetailsServiceImpl;
 import com.smart.cms.security.extension.refresh.PreAuthenticatedUserDetailsService;
@@ -78,20 +79,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // 获取原有默认授权模式(授权码模式、密码模式、客户端模式、简化模式)的授权者
         List<TokenGranter> granterList = new ArrayList<>(Arrays.asList(endpoints.getTokenGranter()));
 
-//        // 添加验证码授权模式授权者
-//        granterList.add(new CaptchaTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
-//                endpoints.getOAuth2RequestFactory(), authenticationManager, stringRedisTemplate
-//        ));
-//
-//        // 添加手机短信验证码授权模式的授权者
-//        granterList.add(new SmsCodeTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
-//                endpoints.getOAuth2RequestFactory(), authenticationManager
-//        ));
-//
-//        // 添加微信授权模式的授权者
-//        granterList.add(new WechatTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
-//                endpoints.getOAuth2RequestFactory(), authenticationManager
-//        ));
+        // 添加手机短信验证码授权模式的授权者
+        granterList.add(new SmsCodeTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory(), "SMS",authenticationManager
+        ));
 
         CompositeTokenGranter compositeTokenGranter = new CompositeTokenGranter(granterList);
         endpoints.authenticationManager(authenticationManager)

@@ -65,17 +65,6 @@ public class AuthController {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String clientId = request.getParameter(SecurityConstants.GRANT_TYPE_KEY);
         log.info("OAuth认证授权 客户端ID:{}，请求参数：{}", clientId, JSONUtil.toJsonStr(parameters));
-
-        /**
-         * knife4j接口文档测试使用
-         *
-         * 请求头自动填充，token必须原生返回，不能有任何包装，否则显示 undefined undefined
-         * 账号/密码:  client_id/client_secret : client/123456
-         */
-        if (SecurityConstants.TEST_CLIENT_ID.equals(clientId)) {
-            return tokenEndpoint.postAccessToken(principal, parameters).getBody();
-        }
-
         OAuth2AccessToken accessToken = tokenEndpoint.postAccessToken(principal, parameters).getBody();
         return R.ok(accessToken);
     }

@@ -73,9 +73,9 @@
 ```
 ## 获取授权码和获取token
 ### 授权码模式response_type=code
-* /oauth/authoriz?client_id=客户端id&response_type=code&scope=all&redirect_ui=www.baidu.com
+* /oauth/authorize?client_id=客户端id&response_type=code&scope=all&redirect_ui=www.baidu.com
 * /oauth/token?client_id=客户端id&client_secret=密钥&grant_type=authorization_code&code=上面地址返回的code&redirect_ui=www.baidu.com
 ### 简易模式response_type=token
-* /oauth/authoriz?client_id=客户端id&response_type=token&scope=all&redirect_ui=www.baidu.com
+* /oauth/authorize?client_id=客户端id&response_type=token&scope=all&redirect_ui=www.baidu.com
 ### 密码模式
 * /oauth/token?client_id=客户端id&client_secret=密钥&grant_type=password&username=s&password=2312

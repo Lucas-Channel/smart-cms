@@ -1,5 +1,6 @@
 package com.smart.cms.security.config;
 
+import com.smart.cms.security.core.mobile.SmsCodeProduction;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -55,7 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(daoAuthenticationProvider());
+        auth.authenticationProvider(daoAuthenticationProvider()).authenticationProvider(smsCodeAuthenticationProvider());
     }
 
     /**
@@ -71,7 +72,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         provider.setHideUserNotFoundExceptions(false); // 是否隐藏用户不存在异常，默认:true-隐藏；false-抛出异常；
         return provider;
     }
-
+    /**
+     * 手机验证码认证授权提供者
+     *
+     * @return
+     */
+    @Bean
+    public SmsCodeProduction smsCodeAuthenticationProvider() {
+        SmsCodeProduction provider = new SmsCodeProduction();
+        provider.setUserDetailsService(sysUserDetailsService);
+        provider.setRedisTemplate(redisTemplate);
+        return provider;
+    }
     /**
      * 密码编码器
      * <p>

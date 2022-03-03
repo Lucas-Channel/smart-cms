@@ -57,7 +57,7 @@ spring:
 security:
   ignoreUrls:
     # 登录接口
-    - /smart-auth/oauth/token/**
+    - /smart-auth/oauth/**
     # Knife4j
     - /webjars/**
     - /doc.html

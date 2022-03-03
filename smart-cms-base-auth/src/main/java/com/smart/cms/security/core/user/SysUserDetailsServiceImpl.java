@@ -55,4 +55,29 @@ public class SysUserDetailsServiceImpl implements UserDetailsService {
         return userDetails;
     }
 
+    public UserDetails loadUserByMobile(String mobile) throws UsernameNotFoundException {
+        SysUserDetails userDetails = null;
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("mobile", mobile);
+        paramsMap.put("del_flag", 0);
+        paramsMap.put("status", 1);
+        List<UserBase> userBases = userMapper.selectByMap(paramsMap);
+        userBases.forEach(it -> {
+            it.setRoles(userMapper.listByUserId(it.getId()));
+        });
+        if (!CollectionUtils.isEmpty(userBases)) {
+            userDetails = new SysUserDetails(userBases.get(0));
+        }
+        if (userDetails == null) {
+            throw new UsernameNotFoundException(ResultCode.USER_NOT_EXIST.getMsg());
+        } else if (!userDetails.isEnabled()) {
+            throw new DisabledException("该账户已被禁用!");
+        } else if (!userDetails.isAccountNonLocked()) {
+            throw new LockedException("该账号已被锁定!");
+        } else if (!userDetails.isAccountNonExpired()) {
+            throw new AccountExpiredException("该账号已过期!");
+        }
+        return userDetails;
+    }
+
 }

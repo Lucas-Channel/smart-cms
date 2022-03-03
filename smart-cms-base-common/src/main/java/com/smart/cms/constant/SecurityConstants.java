@@ -80,7 +80,7 @@ public interface SecurityConstants {
     /**
      * 短信验证码key前缀
      */
-    String SMS_CODE_PREFIX = "SMS_CODE:";
+    String SMS_CODE_PREFIX = "SMS:";
 
     /**
      * 接口文档 Knife4j 测试客户端ID
