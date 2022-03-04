@@ -1,11 +1,14 @@
 package com.smart.cms.account.controller;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smart.cms.account.service.IUserService;
 import com.smart.cms.authconstant.RoleConstant;
+import com.smart.cms.common.Result;
+import com.smart.cms.user.AuthUser;
 import com.smart.cms.user.UserBase;
 import com.smart.cms.utils.other.PageData;
 import io.swagger.annotations.*;
@@ -72,5 +75,22 @@ public class UserController {
     @ApiOperation(value = "删除", notes = "传入ids")
     public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam List<Long> ids) {
         return R.ok(userService.removeByIds(ids));
+    }
+
+    @ApiOperation(value = "获取当前登陆的用户信息")
+    @GetMapping("/getCurrentUser")
+    public Result<UserBase> getCurrentUser() {
+        UserBase loginUserVO = new UserBase();
+        // 用户基本信息
+        Long userId = AuthUser.getUserId();
+        UserBase user = userService.getById(userId);
+        BeanUtil.copyProperties(user, loginUserVO);
+        // 用户角色信息
+        List<String> roles = AuthUser.getRoles();
+        loginUserVO.setRoles(roles);
+        // 用户按钮权限信息
+//        List<String> perms = iSysPermissionService.listBtnPermByRoles(roles);
+//        loginUserVO.setPerms(perms);
+        return Result.success(loginUserVO);
     }
 }

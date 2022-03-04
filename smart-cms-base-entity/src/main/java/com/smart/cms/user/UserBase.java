@@ -45,6 +45,9 @@ public class UserBase extends BaseEntityData implements Serializable {
     @TableField(exist = false)
     private List<String> roles;
 
+    @TableField(exist = false)
+    private List<String> perms;
+
     /**
      * 部门ID
      */
