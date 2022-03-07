@@ -1,7 +1,10 @@
 package com.smart.cms.menu.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.smart.cms.system.menu.MenuDTO;
 import com.smart.cms.system.menu.RoleMenuDTO;
+
+import java.util.List;
 
 /**
  * TODO
@@ -11,4 +14,5 @@ import com.smart.cms.system.menu.RoleMenuDTO;
  * @Version: 1.0
  */
 public interface RoleMenuMapper extends BaseMapper<RoleMenuDTO> {
+    List<MenuDTO> listMenusWithRole();
 }

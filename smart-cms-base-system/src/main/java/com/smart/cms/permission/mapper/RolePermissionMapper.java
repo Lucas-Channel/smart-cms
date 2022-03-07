@@ -27,4 +27,6 @@ public interface RolePermissionMapper extends BaseMapper<RolePermissionDTO> {
     List<AllotedPermissionResponse> listRoleAllotedPermissionByRoleId(@Param("roleId") Long roleId);
 
     List<PermissionDTO> listPermRoles();
+
+    List<String> listBtnPermByRoles(@Param("roles") List<String> roles);
 }

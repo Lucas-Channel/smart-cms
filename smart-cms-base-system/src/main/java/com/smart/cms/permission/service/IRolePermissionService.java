@@ -17,4 +17,6 @@ public interface IRolePermissionService extends IService<RolePermissionDTO> {
     List<Map<String, Object>> listRoleAllotedPermissionByRoleId(Long roleId);
 
     boolean refreshPermRolesRules();
+
+    List<String> listRoleAllotedPermissionByRoles(List<String> roles);
 }

@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smart.cms.account.service.IUserService;
 import com.smart.cms.authconstant.RoleConstant;
 import com.smart.cms.common.Result;
+import com.smart.cms.permission.service.IRolePermissionService;
 import com.smart.cms.user.AuthUser;
 import com.smart.cms.user.UserBase;
 import com.smart.cms.utils.other.PageData;
@@ -35,7 +36,10 @@ import java.util.List;
 @Api(value = "用户管理", tags = "接口")
 //@PreAuthorize(RoleConstant.HAS_ROLE_ADMIN)
 public class UserController {
+
     private IUserService userService;
+
+    private IRolePermissionService rolePermissionService;
 
     @GetMapping("/listUsersPage")
     @ApiImplicitParams({
@@ -89,8 +93,8 @@ public class UserController {
         List<String> roles = AuthUser.getRoles();
         loginUserVO.setRoles(roles);
         // 用户按钮权限信息
-//        List<String> perms = iSysPermissionService.listBtnPermByRoles(roles);
-//        loginUserVO.setPerms(perms);
+        List<String> perms = rolePermissionService.listRoleAllotedPermissionByRoles(roles);
+        loginUserVO.setPerms(perms);
         return Result.success(loginUserVO);
     }
 }

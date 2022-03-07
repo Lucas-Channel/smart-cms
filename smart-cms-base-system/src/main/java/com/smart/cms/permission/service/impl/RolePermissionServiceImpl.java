@@ -10,9 +10,12 @@ import com.smart.cms.permission.service.IRolePermissionService;
 import com.smart.cms.permission.vo.AllotedPermissionResponse;
 import com.smart.cms.system.permission.PermissionDTO;
 import com.smart.cms.system.permission.RolePermissionDTO;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -29,6 +32,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper, RolePermissionDTO> implements IRolePermissionService {
     private final RedisTemplate redisTemplate;
+    @Autowired
+    private RolePermissionMapper rolePermissionMapper;
 
     @Override
     public List<Map<String, Object>> listRoleAllotedPermissionByRoleId(Long roleId) {
@@ -68,6 +73,12 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
             }
         }
         return true;
+    }
+
+    @Override
+    public List<String> listRoleAllotedPermissionByRoles(List<String> roles) {
+        Assert.notNull(roles, "角色编码不能为空");
+        return rolePermissionMapper.listBtnPermByRoles(roles);
     }
 
     /**

@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smart.cms.authconstant.RoleConstant;
 import com.smart.cms.menu.service.IMenuService;
 import com.smart.cms.menu.vo.MenuVo;
+import com.smart.cms.menu.vo.RouteVO;
 import com.smart.cms.system.menu.MenuDTO;
 import com.smart.cms.utils.other.PageData;
 import io.swagger.annotations.*;
@@ -95,4 +96,9 @@ public class MenuController {
         return R.ok(menuService.removeByIds(ids));
     }
 
+    @GetMapping("/listMenus")
+    public R<List<RouteVO>> listMenus() {
+        List<RouteVO> list = menuService.listRoute();
+        return R.ok(list);
+    }
 }

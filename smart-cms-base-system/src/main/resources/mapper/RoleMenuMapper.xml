@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.cms.menu.mapper.RoleMenuMapper">
+
+    <resultMap id="BaseResultMap" type="com.smart.cms.system.menu.MenuDTO">
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="parentId" column="parent_id" jdbcType="BIGINT"/>
+        <result property="routePath" column="route_path" jdbcType="VARCHAR"/>
+        <result property="componentPath" column="component_path" jdbcType="VARCHAR"/>
+        <result property="icon" column="icon" jdbcType="VARCHAR"/>
+        <result property="sort" column="sort" jdbcType="INTEGER"/>
+        <result property="status" column="status" jdbcType="BOOLEAN"/>
+        <collection property="roles" ofType="string" javaType="list">
+            <result column="code"/>
+        </collection>
+    </resultMap>
+
+    <select id="listMenusWithRole" resultMap="BaseResultMap">
+        select m.id,
+               m.name,
+               m.parent_id,
+               m.route_path,
+               m.component_path,
+               m.icon,
+               m.sort,
+               m.status,
+               t3.role_code code
+        from smart_system_menu m
+                 left join smart_system_role_menu t2 on m.id = t2.menu_id
+                 left join smart_role t3 on t2.role_id = t3.id
+        where m.status = 1
+        order by m.sort asc
+    </select>
+
+</mapper>

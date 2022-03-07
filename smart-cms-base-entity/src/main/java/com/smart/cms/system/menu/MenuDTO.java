@@ -1,4 +1,6 @@
 package com.smart.cms.system.menu;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -8,6 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -36,10 +39,16 @@ public class MenuDTO extends BaseEntityData implements Serializable {
 	private String name;
 
 	/**
-	 * 请求地址
+	 * 路由地址
 	 */
-	@ApiModelProperty(value = "请求地址")
-	private String path;
+	@ApiModelProperty(value = "路由地址")
+	private String routePath;
+
+	/**
+	 * 组件路径
+	 */
+	@ApiModelProperty(value = "组件路径")
+	private String componentPath;
 
 	/**
 	 * 菜单图标
@@ -62,6 +71,8 @@ public class MenuDTO extends BaseEntityData implements Serializable {
 
 	private Integer status;
 
+	@TableField(exist = false)
+	private List<String> roles;
 
 
 	@Override
