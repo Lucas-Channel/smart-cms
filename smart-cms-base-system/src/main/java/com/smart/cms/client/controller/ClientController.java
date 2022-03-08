@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smart.cms.authconstant.RoleConstant;
 import com.smart.cms.client.service.IClientService;
+import com.smart.cms.common.PageResult;
 import com.smart.cms.common.Result;
 import com.smart.cms.system.client.ClientDetail;
 import com.smart.cms.utils.other.PageData;
@@ -44,7 +45,7 @@ public class ClientController {
 	*/
 	@GetMapping("/list")
 	@ApiOperation(value = "分页-获取客户端信息列表", notes = "传入client")
-	public Result<IPage<ClientDetail>> list(ClientDetail client, PageData pageData) {
+	public PageResult<ClientDetail> list(ClientDetail client, PageData pageData) {
 		QueryWrapper<ClientDetail> queryWrapper = new QueryWrapper<>();
 		queryWrapper.eq("del_flag", 0);
 		if (StringUtils.isNotBlank(client.getClientId())) {
@@ -52,7 +53,7 @@ public class ClientController {
 		}
 		Page<ClientDetail> page = new Page<>(pageData.getCurrent(), pageData.getSize());
 		IPage<ClientDetail> pages = clientService.page(page, queryWrapper);
-		return Result.success(pages);
+		return PageResult.success(pages);
 	}
 
 	@ApiOperation(value = "客户端详情")
