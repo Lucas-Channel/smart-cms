@@ -11,9 +11,7 @@ import com.smart.cms.client.service.IClientService;
 import com.smart.cms.common.Result;
 import com.smart.cms.system.client.ClientDetail;
 import com.smart.cms.utils.other.PageData;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 //import org.springframework.security.access.prepost.PreAuthorize;
@@ -21,6 +19,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -45,7 +44,7 @@ public class ClientController {
 	*/
 	@GetMapping("/list")
 	@ApiOperation(value = "分页-获取客户端信息列表", notes = "传入client")
-	public R<IPage<ClientDetail>> list(ClientDetail client, PageData pageData) {
+	public Result<IPage<ClientDetail>> list(ClientDetail client, PageData pageData) {
 		QueryWrapper<ClientDetail> queryWrapper = new QueryWrapper<>();
 		queryWrapper.eq("del_flag", 0);
 		if (StringUtils.isNotBlank(client.getClientId())) {
@@ -53,29 +52,48 @@ public class ClientController {
 		}
 		Page<ClientDetail> page = new Page<>(pageData.getCurrent(), pageData.getSize());
 		IPage<ClientDetail> pages = clientService.page(page, queryWrapper);
-		return R.ok(pages);
+		return Result.success(pages);
 	}
 
-	/**
-	* 新增或修改
-	*/
-	@PostMapping("/saveOrUpdate")
-	@ApiOperation(value = "新增或修改", notes = "传入client")
-	public R saveOrUpdate( @RequestBody ClientDetail authClient) {
-		BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-		authClient.setClientSecret(bCryptPasswordEncoder.encode(authClient.getClientSecret()));
-		boolean row = clientService.saveOrUpdate(authClient);
-		return row ? R.ok("操作成功") : R.failed("操作成功");
+	@ApiOperation(value = "客户端详情")
+	@ApiImplicitParam(name = "clientId", value = "客户端id", required = true, paramType = "path", dataType = "String")
+	@GetMapping("/{clientId}")
+	public Result detail(@PathVariable String clientId) {
+		ClientDetail client = clientService.getById(clientId);
+		return Result.success(client);
+	}
+
+	@ApiOperation(value = "新增客户端")
+	@ApiImplicitParam(name = "client", value = "实体JSON对象", required = true, paramType = "body", dataType = "OauthClientDetails")
+	@PostMapping
+	public Result add(@RequestBody ClientDetail client) {
+		boolean status = clientService.save(client);
+		return Result.judge(status);
+	}
+
+	@ApiOperation(value = "修改客户端")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "clientId", value = "客户端id", required = true, paramType = "path", dataType = "String"),
+			@ApiImplicitParam(name = "client", value = "实体JSON对象", required = true, paramType = "body", dataType = "OauthClientDetails")
+	})
+	@PutMapping(value = "/{clientId}")
+	public Result update(
+			@PathVariable String clientId,
+			@RequestBody ClientDetail client) {
+		boolean status = clientService.updateById(client);
+		return Result.judge(status);
 	}
 
 
 	/**
 	 * 删除
 	 */
-	@PostMapping("/remove")
-	@ApiOperation(value = "删除", notes = "传入ids")
-	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam List<Long> ids) {
-		return R.ok(clientService.removeByIds(ids));
+	@ApiOperation(value = "删除客户端")
+	@ApiImplicitParam(name = "ids", value = "id集合,以,拼接字符串", required = true, paramType = "query", dataType = "String")
+	@DeleteMapping("/{ids}")
+	public Result delete(@PathVariable("ids") String ids) {
+		boolean status = clientService.removeByIds(Arrays.asList(ids.split(",")));
+		return Result.judge(status);
 	}
 
 	@ApiOperation(hidden = true, value = "获取 OAuth2 客户端认证信息", notes = "Feign 调用")
