@@ -74,6 +74,9 @@ public class MenuDTO extends BaseEntityData implements Serializable {
 	@TableField(exist = false)
 	private List<String> roles;
 
+	@TableField(exist = false)
+	private List<MenuDTO> children;
+
 
 	@Override
 	public boolean equals(Object obj) {

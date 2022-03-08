@@ -16,17 +16,17 @@ import java.io.Serializable;
  * @Version: 1.0
  */
 @Data
-@TableName("smart_system_dict_b")
+@TableName("smart_system_dict")
 @ApiModel(value = "字典对象", description = "字典对象")
 public class DictDTO extends BaseEntityData implements Serializable {
     private static final long serialVersionUID = 7454441585390898598L;
-    @ApiModelProperty(value = "字典类型")
-    private String dictType;
+    @ApiModelProperty(value = "字典编码")
+    private String dictCode;
     @ApiModelProperty(value = "字典名称")
     private String dictName;
-    @ApiModelProperty(value = "排序")
-    private String sort;
-    @ApiModelProperty(value = "父级id")
-    private Long parentId;
+    @ApiModelProperty(value = "状态")
+    private Integer status;
+
+    private String remark;
 
 }

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.cms.permission.mapper.PermissionMapper">
+
+
+    <select id="listPermissionsByPage" resultType="com.smart.cms.system.permission.PermissionDTO">
+        SELECT
+        ssp.id,
+        ssp.menu_id,
+        ssp.NAME,
+        ssp.btn_perm,
+        ssp.requestMethod,
+        ssp.serviceName,
+        ssp.requestPath
+        FROM
+        (
+        SELECT
+        id,
+        menu_id,
+        NAME,
+        btn_perm,
+        SUBSTRING_INDEX( url_perm, ':', 1 ) requestMethod,
+        SUBSTRING_INDEX( SUBSTR( SUBSTRING_INDEX( url_perm, ':',- 1 ), 2 ), '/', 1 ) serviceName,
+        SUBSTR(
+        SUBSTRING_INDEX( url_perm, ':', - 1 ),
+        LENGTH(
+        SUBSTRING_INDEX( SUBSTR( SUBSTRING_INDEX( url_perm, ':',- 1 ), 2 ), '/', 1 ))+ 2
+        ) requestPath
+        FROM
+        smart_system_permission
+        ) ssp
+        LEFT JOIN smart_system_menu ssm ON ssp.menu_id = ssm.id
+        <where>
+            <if test='queryParams.name != null and queryParams.name.trim() neq ""'>
+                and ssp.name like concat('%',#{queryParams.name},'%')
+            </if>
+            <if test='queryParams.menuId !=null '>
+                and ssp.menu_id = #{queryParams.menuId}
+            </if>
+        </where>
+        ORDER BY ssp.id DESC
+    </select>
+
+</mapper>

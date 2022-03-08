@@ -1,7 +1,9 @@
 package com.smart.cms.permission.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.smart.cms.system.permission.PermissionDTO;
+import com.smart.cms.utils.other.PageData;
 
 /**
  * TODO
@@ -11,5 +13,5 @@ import com.smart.cms.system.permission.PermissionDTO;
  * @Version: 1.0
  */
 public interface IPermissionService extends IService<PermissionDTO> {
-
+    IPage<PermissionDTO> listPermissionsByPage(PermissionDTO query, PageData pageData);
 }

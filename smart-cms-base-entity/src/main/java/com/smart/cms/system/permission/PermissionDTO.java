@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.smart.cms.base.BaseEntityData;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -31,4 +32,16 @@ public class PermissionDTO extends BaseEntityData implements Serializable {
     // 有权限的角色编号集合
     @TableField(exist = false)
     private List<String> roles;
+
+    @ApiModelProperty("URL权限标识-服务名称")
+    @TableField(exist = false)
+    private String serviceName;
+
+    @ApiModelProperty("URL权限标识-请求标识")
+    @TableField(exist = false)
+    private String requestMethod;
+
+    @ApiModelProperty("URL权限标识-请求方式")
+    @TableField(exist = false)
+    private String requestPath;
 }

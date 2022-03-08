@@ -35,7 +35,6 @@ public class SysUserDetailsServiceImpl implements UserDetailsService {
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("username", username);
         paramsMap.put("del_flag", 0);
-        paramsMap.put("status", 1);
         List<UserBase> userBases = userMapper.selectByMap(paramsMap);
         userBases.forEach(it -> {
             it.setRoles(userMapper.listByUserId(it.getId()));
