@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.smart.cms.base.BaseEntityData;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 import java.io.Serializable;
 
@@ -17,6 +18,7 @@ import java.io.Serializable;
 @Data
 @TableName("smart_system_role_menu")
 @ApiModel(value = "角色Menu对象", description = "角色Menu对象")
+@Accessors(chain = true)
 public class RoleMenuDTO extends BaseEntityData implements Serializable {
     private Long roleId;
 

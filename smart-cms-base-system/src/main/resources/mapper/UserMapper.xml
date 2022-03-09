@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smart.cms.account.mapper.UserMapper">
+
+    <select id="listUsersByPage" resultType="com.smart.cms.user.UserBase">
+        SELECT
+        u.id,
+        u.username,
+        u.usercode,
+        u.mobile,
+        u.sex,
+        u.STATUS,
+        GROUP_CONCAT( r.role_NAME ) AS roleName,
+        u.create_time
+        FROM
+        smart_user u
+        inner JOIN smart_user_role ur ON u.id = ur.user_id
+        inner JOIN smart_role r ON ur.role_id = r.id
+        <where>
+            u.del_flag = 0
+            <if test='queryParams.keywords!=null and queryParams.keywords.trim() neq ""'>
+                AND (u.username like concat('%',#{queryParams.keywords},'%')
+                OR u.usercode like concat('%',#{queryParams.keywords},'%')
+                OR u.mobile like concat('%',#{queryParams.keywords},'%'))
+            </if>
+            <if test='queryParams.status!=null'>
+                AND u.status = #{queryParams.status}
+            </if>
+        </where>
+        GROUP BY u.id
+    </select>
+</mapper>

@@ -3,6 +3,7 @@ package com.smart.cms.user;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.smart.cms.base.BaseEntityData;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -52,4 +53,10 @@ public class UserBase extends BaseEntityData implements Serializable {
      * 部门ID
      */
     private Long deptId;
+    @TableField(exist = false)
+    private String roleName;
+
+    @ApiModelProperty("用户角色ID的集合")
+    @TableField(exist = false)
+    private List<Long> roleIds;
 }

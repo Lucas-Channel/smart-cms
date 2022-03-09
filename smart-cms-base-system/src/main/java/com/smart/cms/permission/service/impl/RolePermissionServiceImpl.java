@@ -3,11 +3,13 @@ package com.smart.cms.permission.service.impl;
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.map.MapUtil;
 import cn.hutool.core.util.StrUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.smart.cms.constant.GlobalConstants;
 import com.smart.cms.permission.mapper.RolePermissionMapper;
 import com.smart.cms.permission.service.IRolePermissionService;
 import com.smart.cms.permission.vo.AllotedPermissionResponse;
+import com.smart.cms.role.vo.RolePermissionVo;
 import com.smart.cms.system.permission.PermissionDTO;
 import com.smart.cms.system.permission.RolePermissionDTO;
 import lombok.AllArgsConstructor;
@@ -79,6 +81,51 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
     public List<String> listRoleAllotedPermissionByRoles(List<String> roles) {
         Assert.notNull(roles, "角色编码不能为空");
         return rolePermissionMapper.listBtnPermByRoles(roles);
+    }
+
+    @Override
+    public List<Long> listPermIds(Long menuId, Long roleId) {
+        return this.baseMapper.listPermIds(menuId, roleId);
+    }
+
+    @Override
+    public boolean saveRolePerms(RolePermissionVo rolePermissionVo) {
+        Long menuId = rolePermissionVo.getMenuId();
+        Long roleId = rolePermissionVo.getRoleId();
+        List<Long> permIds = rolePermissionVo.getPermIds();
+
+        List<Long> oldPermIds = this.listPermIds(menuId, roleId);
+
+        // 验证权限数据是否改变
+        List<Long> sortedPermIds = permIds.stream().sorted().collect(Collectors.toList());
+        List<Long> sortedOldPermIds = oldPermIds.stream().sorted().collect(Collectors.toList());
+        boolean permDataChangeFlag = !org.apache.commons.collections4.CollectionUtils.isEqualCollection(sortedPermIds, sortedOldPermIds);
+        Assert.isTrue(permDataChangeFlag, "提交失败，权限数据无改动！");
+
+        // 删除此次保存移除的权限
+        boolean updateFlag = false;
+        if (CollectionUtil.isNotEmpty(oldPermIds)) {
+            List<Long> removePermIds = oldPermIds.stream().filter(id -> !permIds.contains(id)).collect(Collectors.toList());
+            if (CollectionUtil.isNotEmpty(removePermIds)) {
+                updateFlag = this.remove(new LambdaQueryWrapper<RolePermissionDTO>()
+                        .eq(RolePermissionDTO::getRoleId, roleId)
+                        .in(RolePermissionDTO::getPermissionId, removePermIds));
+            }
+        }
+
+        // 新增数据库不存在的权限
+        if (CollectionUtil.isNotEmpty(permIds)) {
+            List<Long> newPermIds = permIds.stream().filter(id -> !oldPermIds.contains(id)).collect(Collectors.toList());
+            if (CollectionUtil.isNotEmpty(newPermIds)) {
+                List<RolePermissionDTO> rolePerms = new ArrayList<>();
+                for (Long permId : newPermIds) {
+                    RolePermissionDTO rolePerm = new RolePermissionDTO(roleId, permId);
+                    rolePerms.add(rolePerm);
+                }
+                updateFlag = this.saveBatch(rolePerms);
+            }
+        }
+        return updateFlag;
     }
 
     /**

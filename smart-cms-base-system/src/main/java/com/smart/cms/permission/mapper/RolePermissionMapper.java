@@ -29,4 +29,13 @@ public interface RolePermissionMapper extends BaseMapper<RolePermissionDTO> {
     List<PermissionDTO> listPermRoles();
 
     List<String> listBtnPermByRoles(@Param("roles") List<String> roles);
+
+    /**
+     * 根据菜单ID和角色ID获取权限ID集合
+     *
+     * @param menuId
+     * @param roleId
+     * @return
+     */
+    List<Long> listPermIds(Long menuId, Long roleId);
 }

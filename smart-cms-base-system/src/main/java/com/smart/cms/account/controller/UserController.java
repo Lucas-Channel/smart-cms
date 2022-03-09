@@ -6,7 +6,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.smart.cms.account.service.IUserService;
+import com.smart.cms.account.vo.UserQuery;
 import com.smart.cms.authconstant.RoleConstant;
+import com.smart.cms.common.PageResult;
 import com.smart.cms.common.Result;
 import com.smart.cms.permission.service.IRolePermissionService;
 import com.smart.cms.user.AuthUser;
@@ -19,8 +21,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * TODO
@@ -41,44 +45,58 @@ public class UserController {
 
     private IRolePermissionService rolePermissionService;
 
-    @GetMapping("/listUsersPage")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", value = "名称", paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "usercode", value = "编号", paramType = "query", dataType = "string"),
-            @ApiImplicitParam(name = "current", value = "当前页", paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "size", value = "页码大小", paramType = "query", dataType = "int")
-    })
-    @ApiOperation(value = "分页-列表", notes = "传入对象")
-    public R<IPage<UserBase>> listUsersPage(@RequestParam UserBase userBase, PageData pageData) {
-        QueryWrapper<UserBase> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("del_flag", 0);
-        if (StringUtils.isNotBlank(userBase.getUsername())) {
-            queryWrapper.like("username", userBase.getUsername());
-        }
-        if (StringUtils.isNotBlank(userBase.getUsercode())) {
-            queryWrapper.like("usercode", userBase.getUsercode());
-        }
-        Page<UserBase> page = new Page<>(pageData.getCurrent(), pageData.getSize());
-        IPage<UserBase> pages = userService.page(page, queryWrapper);
-        return R.ok(pages);
+    @ApiOperation(value = "用户分页列表")
+    @GetMapping("/page")
+    public PageResult<UserBase> listUsersWithPage(
+            UserQuery queryParams, PageData pageData
+    ) {
+        IPage<UserBase> result = userService.listUsersByPage(queryParams, pageData);
+        return PageResult.success(result);
     }
 
-    @PostMapping("/saveOrUpdate")
-    @ApiOperation(value = "新增或修改", notes = "传入参数")
-    public R saveOrUpdate(@RequestBody UserBase userBase) {
-        userBase.setCreateTime(new Date());
-        userBase.setDelFlag(0);
-        boolean row = userService.saveOrUpdate(userBase);
-        return row ? R.ok("操作成功") : R.failed("操作成功");
+    @ApiOperation(value = "获取用户表单详情")
+    @GetMapping("/{userId}/form_detail")
+    public Result<UserBase> getUserDetail(
+            @ApiParam(value = "用户ID", example = "1") @PathVariable Long userId
+    ) {
+        UserBase userDetail = userService.lambdaQuery().eq(UserBase::getId, userId).one();
+        return Result.success(userDetail);
     }
 
-    /**
-     * 删除
-     */
-    @PostMapping("/remove")
-    @ApiOperation(value = "删除", notes = "传入ids")
-    public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam List<Long> ids) {
-        return R.ok(userService.removeByIds(ids));
+    @ApiOperation(value = "新增用户")
+    @PostMapping
+    public Result addUser(@RequestBody UserBase user) {
+        boolean result = userService.saveUser(user);
+        return Result.judge(result);
+    }
+
+    @ApiOperation(value = "修改用户")
+    @PostMapping(value = "/{userId}")
+    public Result updateUser(
+            @ApiParam("用户ID") @PathVariable Long userId,
+            @RequestBody UserBase user
+    ) {
+        user.setId(userId);
+        boolean result = userService.updateUser(user);
+        return Result.judge(result);
+    }
+
+    @ApiOperation(value = "修改用户")
+    @PostMapping(value = "/updateStatus")
+    public Result updateUser(
+            @RequestBody UserBase user
+    ) {
+        boolean result = userService.updateById(user);
+        return Result.judge(result);
+    }
+
+    @ApiOperation(value = "删除用户")
+    @DeleteMapping("/{ids}")
+    public Result deleteUsers(
+            @ApiParam("用户ID，多个以英文逗号(,)分割") @PathVariable String ids
+    ) {
+        boolean status = userService.removeByIds(Arrays.asList(ids.split(",")).stream().collect(Collectors.toList()));
+        return Result.judge(status);
     }
 
     @ApiOperation(value = "获取当前登陆的用户信息")

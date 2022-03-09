@@ -93,7 +93,9 @@ public class ClientController {
 	@ApiImplicitParam(name = "ids", value = "id集合,以,拼接字符串", required = true, paramType = "query", dataType = "String")
 	@DeleteMapping("/{ids}")
 	public Result delete(@PathVariable("ids") String ids) {
-		boolean status = clientService.removeByIds(Arrays.asList(ids.split(",")));
+		QueryWrapper<ClientDetail>  queryWrapper = new QueryWrapper<>();
+		queryWrapper.in("client_id", Arrays.asList(ids.split(",")));
+		boolean status = clientService.remove(queryWrapper);
 		return Result.judge(status);
 	}
 
